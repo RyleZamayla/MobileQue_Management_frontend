@@ -37,6 +37,12 @@ class _LoginState extends State<Login> {
                     borderRadius: BorderRadius.circular(10)
                 ),
               ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your Email.';
+                }
+                return null;
+              },
             ),
 
             const SizedBox(height: 10.0),
@@ -58,6 +64,12 @@ class _LoginState extends State<Login> {
                   borderRadius: BorderRadius.circular(10)
                 ),
               ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your Password.';
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 20.0),
             SizedBox(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobilequemanagement_frontend/screens/auth/student_login.dart';
+import 'package:mobilequemanagement_frontend/screens/student_que_form.dart';
 
 void main() {
   runApp(const QueManagement());
@@ -18,7 +18,7 @@ class QueManagement extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.amber),
       ),
-      home: const Login(),
+      home: const QueForm(),
       debugShowCheckedModeBanner: false,
     );
   }
