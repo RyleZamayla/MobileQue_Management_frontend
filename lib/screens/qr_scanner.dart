@@ -1,8 +1,7 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:mobilequemanagement_frontend/qr_scanner_overlay.dart';
+import 'package:mobilequemanagement_frontend/screens/materials/qr_scanner_overlay.dart';
 
 // ignore: must_be_immutable
 class QrScanner extends StatelessWidget {

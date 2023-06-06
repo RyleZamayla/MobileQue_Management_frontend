@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobilequemanagement_frontend/qr_scanner.dart';
+import 'package:mobilequemanagement_frontend/screens/qr_scanner.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
