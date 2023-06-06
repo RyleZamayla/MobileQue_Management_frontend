@@ -38,7 +38,7 @@ class CustomDrawer extends StatelessWidget {
             leading: const Icon(Icons.logout),
             title: const Text('Logout'),
             onTap: () {
-              // Handle logout tab action
+
             },
           ),
         ],

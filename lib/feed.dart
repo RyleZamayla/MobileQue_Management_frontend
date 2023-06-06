@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mobilequemanagement_frontend/bottom_nav_bar.dart';
 import 'package:mobilequemanagement_frontend/drawer.dart';
+import 'package:mobilequemanagement_frontend/qr_scanner.dart';
 import 'package:mobilequemanagement_frontend/student_login.dart';
-import 'package:mobilequemanagement_frontend/qr_button.dart';
 
 void main() {
-  runApp(const FeedApp());
+  runApp(const QueManagement());
 }
 
-class FeedApp extends StatelessWidget {
-  const FeedApp({Key? key}) : super(key: key);
+class QueManagement extends StatelessWidget {
+  const QueManagement({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +58,6 @@ class MyHomePage extends StatelessWidget {
           // Add more InstructorCard widgets for other instructors
         ],
       ),
-      floatingActionButton: const ActionButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: const BottomNavBar(),
     );
   }
 }

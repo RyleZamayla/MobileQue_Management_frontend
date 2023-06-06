@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobilequemanagement_frontend/feed.dart';
+import 'package:mobilequemanagement_frontend/qr_scanner.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -67,10 +68,7 @@ class _LoginState extends State<Login> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const FeedApp()),
-                  );
+
                 },
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -90,7 +88,7 @@ class _LoginState extends State<Login> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const FeedApp()),
+                    MaterialPageRoute(builder: (context) => const QrScanner()),
                   );
                 },
                 style: ButtonStyle(
