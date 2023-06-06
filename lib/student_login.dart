@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobilequemanagement_frontend/feed.dart';
 import 'package:mobilequemanagement_frontend/qr_scanner.dart';
 
 class Login extends StatefulWidget {
@@ -13,7 +12,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF05046a),
+      backgroundColor: const Color(0xFFfafafa),
       body: Container(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -25,16 +24,16 @@ class _LoginState extends State<Login> {
               decoration: InputDecoration(
                 prefixIcon: const Icon(
                     Icons.email_outlined,
-                    color: Colors.grey),
+                    color: Color(0xFF05046a)),
                 labelText: 'Email',
-                labelStyle: const TextStyle(color: Colors.grey),
+                labelStyle: const TextStyle(color: Color(0xFF05046a)),
                 border: const OutlineInputBorder(),
                 focusedBorder:  OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white),
+                    borderSide: const BorderSide(color: Colors.amber),
                     borderRadius: BorderRadius.circular(10)
                 ),
                 enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey),
+                    borderSide: const BorderSide(color: Color(0xFF05046a)),
                     borderRadius: BorderRadius.circular(10)
                 ),
               ),
@@ -46,19 +45,17 @@ class _LoginState extends State<Login> {
               decoration: InputDecoration(
                 prefixIcon: const Icon(
                     Icons.lock_outline_rounded,
-                    color: Colors.grey,),
+                    color: Color(0xFF05046a),),
                 labelText: 'Password',
+                labelStyle: const TextStyle(color: Color(0xFF05046a)),
                 border:  const OutlineInputBorder(),
                 focusedBorder:  OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.white),
+                  borderSide: const BorderSide(color: Colors.amber),
                   borderRadius: BorderRadius.circular(10)
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.grey),
+                  borderSide: const BorderSide(color: Color(0xFF05046a)),
                   borderRadius: BorderRadius.circular(10)
-                ),
-                labelStyle: const TextStyle(
-                  color: Colors.grey, // Change text color here
                 ),
               ),
             ),
@@ -71,6 +68,7 @@ class _LoginState extends State<Login> {
 
                 },
                 style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(const Color(0xFF05046a)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50)
@@ -88,10 +86,11 @@ class _LoginState extends State<Login> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const QrScanner()),
+                    MaterialPageRoute(builder: (context) => QrScanner()),
                   );
                 },
                 style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(const Color(0xFF05046a)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobilequemanagement_frontend/drawer.dart';
-import 'package:mobilequemanagement_frontend/qr_scanner.dart';
 import 'package:mobilequemanagement_frontend/student_login.dart';
 
 void main() {
@@ -15,14 +14,16 @@ class QueManagement extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: const Color(0xFF05046a),
+        primaryColor: Colors.white,
         primaryColorDark: const Color(0xFF05046a),
-        visualDensity: VisualDensity.adaptivePlatformDensity, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0xFF05046a)),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.amber),
       ),
       home: const Login(),
       debugShowCheckedModeBanner: false,
     );
   }
+
 }
 
 class MyHomePage extends StatelessWidget {
