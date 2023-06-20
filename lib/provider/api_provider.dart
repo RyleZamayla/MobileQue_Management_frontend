@@ -16,10 +16,11 @@ class apiProvider{
       encoding: convert.Encoding.getByName('utf-8'),
       body: credentials,
     );
+
+    
     if (response.statusCode == 200){
       print("Successfully logged in");
-      print(response.body);
-      return response;
+      return convert.json.decode(response.body);
     } else {
       return "Failed to login";
     }

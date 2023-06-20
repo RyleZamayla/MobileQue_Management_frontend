@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobilequemanagement_frontend/screens/admin_dashboard.dart';
 
 import '../../provider/api_provider.dart';
 
@@ -105,8 +106,8 @@ class _LoginState extends State<Login> {
                         };
                         var response = await api.postLogin(userInfoMap, "auth/login");
                         if(response != "Failed to login"){
-                          // Navigator.pushReplacement(context,
-                          //     MaterialPageRoute(builder: (BuildContext ctx) => admin_dashboard()));
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (BuildContext ctx) => adminDashboard(futureAdmin: response)));
                         }else{
                           setState(() {
                             errorMessage = "Failed to login";
