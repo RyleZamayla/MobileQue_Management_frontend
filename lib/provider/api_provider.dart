@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:mobilequemanagement_frontend/model/user_model.dart';
@@ -6,18 +6,26 @@ import 'package:mobilequemanagement_frontend/model/user_model.dart';
 class apiProvider{
   final String baseURL = "https://ustp-queueing-system.onrender.com/";
 
-  login(Map credentials, String endpoint)async{
+  postLogin(Map<String,dynamic> credentials, String endpoint)async{
+    print(credentials);
     var fullURL = baseURL + endpoint;
-    return await http.post(Uri.parse(fullURL),
-      body: jsonEncode(credentials),
-      headers: setHeaders(),
+    Response response = await http.post(Uri.parse(fullURL),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      encoding: convert.Encoding.getByName('utf-8'),
+      body: credentials,
     );
+    if (response.statusCode == 200){
+      print("Successfully logged in");
+      print(response.body);
+      return response;
+    } else {
+      return "Failed to login";
+    }
   }
 
-  setHeaders()=>{
-    'Content-type':'application/json',
-    'Accept':'application/json'
-  };
+
 
   getUsers(String endpoint)async{
     var fullURL = baseURL + endpoint;
@@ -25,7 +33,7 @@ class apiProvider{
 
     //converting json data to list
     List<UserModel> myModels;
-    myModels = (json.decode(response.body) as List).map((i) =>
+    myModels = (convert.json.decode(response.body) as List).map((i) =>
         UserModel.fromJson(i)).toList();
 
     if (response.statusCode == 200){

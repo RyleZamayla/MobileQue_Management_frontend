@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobilequemanagement_frontend/provider/api_provider.dart';
 import 'package:mobilequemanagement_frontend/screens/qr_scanner.dart';
 
+import 'auth/login.dart';
+
 
 
 class MyHomePage extends StatefulWidget {
@@ -34,12 +36,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => QrScanner()));
               }, icon: const Icon(Icons.qr_code_scanner_rounded)),
-          IconButton(onPressed: (){}, icon: const Text("LOGIN",style: TextStyle(fontWeight: FontWeight.bold)),padding: const EdgeInsets.symmetric(horizontal: 0),)
+          IconButton(
+            onPressed: (){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Login()));
+            }, icon: const Text("LOGIN",style: TextStyle(fontWeight: FontWeight.bold)),padding: const EdgeInsets.symmetric(horizontal: 0),)
         ],
       ),
       // drawer: const CustomDrawer(),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/background_student.jpg'),
             fit: BoxFit.cover,
