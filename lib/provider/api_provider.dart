@@ -1,6 +1,7 @@
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:mobilequemanagement_frontend/model/queues_model.dart';
 import 'package:mobilequemanagement_frontend/model/user_model.dart';
 
 class apiProvider{
@@ -40,6 +41,24 @@ class apiProvider{
     if (response.statusCode == 200){
       print("Successfully fetched json data");
       return myModels;
+    } else {
+      throw Exception('Failed to load users');
+    }
+  }
+
+  getQueues(String endpoint)async{
+    var fullURL = baseURL + endpoint;
+    Response response = await http.get(Uri.parse(fullURL));
+
+    //converting json data to list
+    List<QueuesModel> queues;
+    queues = (convert.json.decode(response.body) as List).map((i) =>
+        QueuesModel.fromJson(i)).toList();
+
+    if (response.statusCode == 200){
+      print("Successfully fetched json data");
+      print(queues);
+      return queues;
     } else {
       throw Exception('Failed to load users');
     }
