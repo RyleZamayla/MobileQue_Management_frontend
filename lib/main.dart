@@ -18,7 +18,7 @@ class QueManagement extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.amber),
       ),
-      home: const MyHomePage(title:"Instructors"),
+      home: const MyHomePage(title:"Dashboard"),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobilequemanagement_frontend/provider/api_provider.dart';
-import 'package:mobilequemanagement_frontend/screens/materials/drawer.dart';
+import 'package:mobilequemanagement_frontend/screens/qr_scanner.dart';
 
 
 
@@ -28,8 +28,16 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          IconButton(
+              onPressed: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => QrScanner()));
+              }, icon: const Icon(Icons.qr_code_scanner_rounded)),
+          IconButton(onPressed: (){}, icon: const Text("LOGIN",style: TextStyle(fontWeight: FontWeight.bold)),padding: const EdgeInsets.symmetric(horizontal: 0),)
+        ],
       ),
-      drawer: const CustomDrawer(),
+      // drawer: const CustomDrawer(),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -104,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         },
                       );
                     },
-                    child: Card(
+                    child: Opacity(opacity: 0.85, child: Card(
                       elevation: 4,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -139,21 +147,15 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           const SizedBox(height: 8.0),
-                          Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.red,
-                            ),
-                            padding: const EdgeInsets.all(4),
-                            child: const Icon(
-                              Icons.star,
-                              color: Colors.white,
-                              size: 16,
+                          Text(
+                            "${snapshot.data![index].status ?? "Not Available"}",
+                            style: TextStyle(
+                              color: Colors.grey,
                             ),
                           ),
                         ],
                       ),
-                    ),
+                    ),)
                   );
                 },
               );

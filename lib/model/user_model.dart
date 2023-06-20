@@ -11,6 +11,7 @@ class UserModel {
   String id;
   String name;
   String email;
+  String? status;
   String position;
   int queueLimit;
   String? profilePic;
@@ -19,6 +20,7 @@ class UserModel {
     required this.id,
     required this.name,
     required this.email,
+    required this.status,
     required this.position,
     required this.queueLimit,
     this.profilePic,
@@ -28,6 +30,7 @@ class UserModel {
     id: json["_id"],
     name: json["name"],
     email: json["email"],
+    status: json["status"],
     position: json["position"],
     queueLimit: json["queueLimit"],
     profilePic: json["profilePic"],
@@ -37,6 +40,7 @@ class UserModel {
     "_id": id,
     "name": name,
     "email": email,
+    "status": status,
     "position": position,
     "queueLimit": queueLimit,
     "profilePic": profilePic,
