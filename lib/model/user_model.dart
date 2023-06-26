@@ -8,41 +8,37 @@ List<UserModel> userModelFromJson(String str) => List<UserModel>.from(json.decod
 String userModelToJson(List<UserModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class UserModel {
-  String id;
   String name;
-  String email;
+  String userId;
   String? status;
   String position;
-  int queueLimit;
   String? profilePic;
+  int count;
 
   UserModel({
-    required this.id,
+    required this.count,
+    required this.userId,
     required this.name,
-    required this.email,
     required this.status,
     required this.position,
-    required this.queueLimit,
     this.profilePic,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    id: json["_id"],
+    count: json["count"],
+    userId: json["userId"],
     name: json["name"],
-    email: json["email"],
     status: json["status"],
     position: json["position"],
-    queueLimit: json["queueLimit"],
     profilePic: json["profilePic"],
   );
 
   Map<String, dynamic> toJson() => {
-    "_id": id,
+    "count": count,
+    "userId": userId,
     "name": name,
-    "email": email,
     "status": status,
     "position": position,
-    "queueLimit": queueLimit,
     "profilePic": profilePic,
   };
 }

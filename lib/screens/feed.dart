@@ -22,7 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    futureUsers = api.getUsers("user/");
+    futureUsers = api.getUsers("queue/count");
     super.initState();
   }
   @override
@@ -155,6 +155,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           const SizedBox(height: 8.0),
                           Text(
                             "${snapshot.data![index].status ?? "Not Available"}",
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          const SizedBox(height: 8.0),
+                          Text(
+                            "Current Queue: ${snapshot.data![index].count.toString()}",
                             style: TextStyle(
                               color: Colors.grey,
                             ),
