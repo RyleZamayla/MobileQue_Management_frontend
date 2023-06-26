@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return GridView.builder(
-                padding: EdgeInsets.all(10),
+                padding:EdgeInsets.all(10),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, // Set the number of columns in the grid
                   mainAxisSpacing: 8.0, // Add vertical spacing between the cards
@@ -70,50 +70,55 @@ class _MyHomePageState extends State<MyHomePage> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Add Queue'),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    labelText: 'Student ID',
-                                  ),
+                          return Center(
+                            child: SingleChildScrollView(
+                              reverse: true,
+                              child: AlertDialog(
+                                title: Text('Add Queue'),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                        labelText: 'Student ID',
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16.0),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                        labelText: 'Student Name',
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16.0),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                        labelText: 'Student Email',
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16.0),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                        labelText: 'Purpose',
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(height: 16.0),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    labelText: 'Student Name',
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('Submit'),
                                   ),
-                                ),
-                                const SizedBox(height: 16.0),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    labelText: 'Student Email',
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('Cancel'),
                                   ),
-                                ),
-                                const SizedBox(height: 16.0),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    labelText: 'Purpose',
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('Submit'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('Cancel'),
-                              ),
-                            ],
                           );
                         },
                       );
