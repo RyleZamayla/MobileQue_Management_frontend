@@ -12,7 +12,7 @@ class QueuesModel {
   String id;
   String userId;
   String name;
-  String idNumber;
+  String? idNumber;
   String email;
   String purpose;
   String status;

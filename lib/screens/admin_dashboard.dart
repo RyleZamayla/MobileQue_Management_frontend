@@ -15,7 +15,7 @@ class _adminDashboardState extends State<adminDashboard> {
   late Map<String, dynamic> admin;
   int _currentIndex = 0;
 
-  final List<Widget> _tabs = [const currentQueue(), const queueHistory()];
+  final List<Widget> _tabs = [currentQueue(), const queueHistory()];
 
   void onTabTapped(int index) {
     // When a tab is tapped, change the state of the current index to the index of the selected tab
