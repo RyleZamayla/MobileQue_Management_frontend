@@ -12,8 +12,9 @@ class currentQueue extends StatefulWidget {
 class _currentQueueState extends State<currentQueue> {
   late Future<dynamic> futureQueues;
   bool isGuest = true;
-  String? dialogName, dialogEmail;
   apiProvider api = apiProvider();
+  late String? id;
+
 
   buildStudentInfo(AsyncSnapshot snapshot, int index){
     return Center(
@@ -131,7 +132,8 @@ class _currentQueueState extends State<currentQueue> {
   
   @override
   void initState() {
-    futureQueues = api.getQueues("queue/pending", "64967cfcb2e50f4969ccd5b4");
+    id = widget.userId;
+    futureQueues = api.getQueues("queue/pending", id);
     super.initState();
   }
   @override

@@ -14,6 +14,7 @@ class adminDashboard extends StatefulWidget {
 class _adminDashboardState extends State<adminDashboard> {
   late Map<String, dynamic> admin;
   int _currentIndex = 0;
+  currentQueue cq = currentQueue();
 
   final List<Widget> _tabs = [currentQueue(), const queueHistory()];
 
@@ -27,6 +28,8 @@ class _adminDashboardState extends State<adminDashboard> {
   @override
   void initState() {
     admin = widget.futureAdmin;
+    print("adminID:${admin['user']['_id']}");
+    cq.userId = admin['user']['_id'];
     super.initState();
   }
   @override
