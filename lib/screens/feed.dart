@@ -68,8 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return GridView.builder(
-                padding: EdgeInsets.all(10),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                padding: const EdgeInsets.all(10),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   // Set the number of columns in the grid
                   mainAxisSpacing: 8.0,
@@ -83,133 +83,134 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      print(snapshot.data![index].id);
                       userId.text = snapshot.data![index].id;
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
                               title: const Center(child: Text('Add Queue')),
-                              content: Form(
-                                  key: formKey,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      TextFormField(
-                                        controller: idNumber,
-                                        keyboardType: TextInputType.number,
-                                        decoration: InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                                width: 3,
-                                                color: Colors.yellowAccent),
-                                            borderRadius:
-                                            BorderRadius.circular(50.0),
+                              content: SingleChildScrollView(
+                                child: Form(
+                                    key: formKey,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        TextFormField(
+                                          controller: idNumber,
+                                          keyboardType: TextInputType.number,
+                                          decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                  width: 3,
+                                                  color: Colors.yellowAccent),
+                                              borderRadius:
+                                              BorderRadius.circular(50.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              // Set focused border color
+                                              borderSide: const BorderSide(
+                                                  width: 3,
+                                                  color: Colors.yellowAccent),
+                                              borderRadius:
+                                              BorderRadius.circular(50.0),
+                                            ),
+                                            labelText: 'Student ID',
+                                            labelStyle:
+                                            const TextStyle(color: Colors.black),
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            // Set focused border color
-                                            borderSide: const BorderSide(
-                                                width: 3,
-                                                color: Colors.yellowAccent),
-                                            borderRadius:
-                                            BorderRadius.circular(50.0),
-                                          ),
-                                          labelText: 'Student ID',
-                                          labelStyle:
-                                          TextStyle(color: Colors.black),
+                                          validator: (value) {
+                                            return (value == '') ? 'Please enter your ID number' : null;
+                                          },
                                         ),
-                                        validator: (value) {
-                                          return (value == '') ? 'Please enter your ID number' : null;
-                                        },
-                                      ),
-                                      const SizedBox(height: 16.0),
-                                      TextFormField(
-                                        controller: name,
-                                        keyboardType: TextInputType.name,
-                                        decoration: InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                                width: 3,
-                                                color: Colors.yellowAccent),
-                                            borderRadius:
-                                            BorderRadius.circular(50.0),
+                                        const SizedBox(height: 16.0),
+                                        TextFormField(
+                                          controller: name,
+                                          keyboardType: TextInputType.name,
+                                          decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                  width: 3,
+                                                  color: Colors.yellowAccent),
+                                              borderRadius:
+                                              BorderRadius.circular(50.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              // Set focused border color
+                                              borderSide: const BorderSide(
+                                                  width: 3,
+                                                  color: Colors.yellowAccent),
+                                              borderRadius:
+                                              BorderRadius.circular(50.0),
+                                            ),
+                                            labelText: 'Student Name',
+                                            labelStyle:
+                                            const TextStyle(color: Colors.black),
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            // Set focused border color
-                                            borderSide: const BorderSide(
-                                                width: 3,
-                                                color: Colors.yellowAccent),
-                                            borderRadius:
-                                            BorderRadius.circular(50.0),
-                                          ),
-                                          labelText: 'Student Name',
-                                          labelStyle:
-                                          TextStyle(color: Colors.black),
+                                          validator: (value) {
+                                            return (value == '') ? 'Please enter your name' : null;
+                                          },
                                         ),
-                                        validator: (value) {
-                                          return (value == '') ? 'Please enter your name' : null;
-                                        },
-                                      ),
-                                      const SizedBox(height: 16.0),
-                                      TextFormField(
-                                        controller: email,
-                                        keyboardType: TextInputType.emailAddress,
-                                        decoration: InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                                width: 3,
-                                                color: Colors.yellowAccent),
-                                            borderRadius:
-                                            BorderRadius.circular(50.0),
+                                        const SizedBox(height: 16.0),
+                                        TextFormField(
+                                          controller: email,
+                                          keyboardType: TextInputType.emailAddress,
+                                          decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                  width: 3,
+                                                  color: Colors.yellowAccent),
+                                              borderRadius:
+                                              BorderRadius.circular(50.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              // Set focused border color
+                                              borderSide: const BorderSide(
+                                                  width: 3,
+                                                  color: Colors.yellowAccent),
+                                              borderRadius:
+                                              BorderRadius.circular(50.0),
+                                            ),
+                                            labelText: 'Student Email',
+                                            labelStyle:
+                                            const TextStyle(color: Colors.black),
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            // Set focused border color
-                                            borderSide: const BorderSide(
-                                                width: 3,
-                                                color: Colors.yellowAccent),
-                                            borderRadius:
-                                            BorderRadius.circular(50.0),
-                                          ),
-                                          labelText: 'Student Email',
-                                          labelStyle:
-                                          TextStyle(color: Colors.black),
+                                          validator: (val) {
+                                            if(!(val!.isEmpty) && !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$").hasMatch(val)){
+                                              return "Enter a valid email address";
+                                            }
+                                          },
                                         ),
-                                        validator: (val) {
-                                          if(!(val!.isEmpty) && !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$").hasMatch(val)){
-                                            return "Enter a valid email address";
-                                          }
-                                        },
-                                      ),
-                                      const SizedBox(height: 16.0),
-                                      TextFormField(
-                                        controller: purpose,
-                                        keyboardType: TextInputType.multiline,
-                                        decoration: InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                                width: 3,
-                                                color: Colors.yellowAccent),
-                                            borderRadius:
-                                            BorderRadius.circular(50.0),
+                                        const SizedBox(height: 16.0),
+                                        TextFormField(
+                                          controller: purpose,
+                                          keyboardType: TextInputType.multiline,
+                                          decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                  width: 3,
+                                                  color: Colors.yellowAccent),
+                                              borderRadius:
+                                              BorderRadius.circular(50.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              // Set focused border color
+                                              borderSide: const BorderSide(
+                                                  width: 3,
+                                                  color: Colors.yellowAccent),
+                                              borderRadius:
+                                              BorderRadius.circular(50.0),
+                                            ),
+                                            labelText: 'Purpose',
+                                            labelStyle:
+                                            TextStyle(color: Colors.black),
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            // Set focused border color
-                                            borderSide: const BorderSide(
-                                                width: 3,
-                                                color: Colors.yellowAccent),
-                                            borderRadius:
-                                            BorderRadius.circular(50.0),
-                                          ),
-                                          labelText: 'Purpose',
-                                          labelStyle:
-                                          TextStyle(color: Colors.black),
+                                          validator: (value) {
+                                            return (value == '') ? 'Please enter your purpose' : null;
+                                          },
                                         ),
-                                        validator: (value) {
-                                          return (value == '') ? 'Please enter your purpose' : null;
-                                        },
-                                      ),
-                                    ],
-                                  )),
+                                      ],
+                                    )),
+                              ),
                               actions: [
                                 Expanded(
                                   child: Row(
@@ -262,25 +263,25 @@ class _MyHomePageState extends State<MyHomePage> {
                                           shape: MaterialStateProperty.all(
                                             RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                              BorderRadius.circular(20.0),
                                             ),
                                           ),
                                           foregroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.white),
+                                          MaterialStateProperty.all(
+                                              Colors.white),
                                           backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  const Color(0xFF05046a)),
-                                            minimumSize:
-                                            MaterialStateProperty.all(
-                                                const Size(100.0,
-                                                    48.0)),
+                                          MaterialStateProperty.all(
+                                              const Color(0xFF05046a)),
+                                          minimumSize:
+                                          MaterialStateProperty.all(
+                                              const Size(100.0,
+                                                  48.0)),
                                         ),
                                         child: Text(
                                           'Submit',
                                           style: TextStyle(
                                               fontSize:
-                                                  18.0), // Adjust font size
+                                              18.0), // Adjust font size
                                         ),
                                       ),
                                       const SizedBox(width: 20.0),
@@ -300,25 +301,25 @@ class _MyHomePageState extends State<MyHomePage> {
                                           shape: MaterialStateProperty.all(
                                             RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20.0),
+                                              BorderRadius.circular(20.0),
                                             ),
                                           ),
                                           foregroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.white),
+                                          MaterialStateProperty.all(
+                                              Colors.white),
                                           backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  const Color(0xFF05046a)),
+                                          MaterialStateProperty.all(
+                                              const Color(0xFF05046a)),
                                           minimumSize:
-                                              MaterialStateProperty.all(
-                                                  const Size(100.0,
-                                                      48.0)), // Adjust width
+                                          MaterialStateProperty.all(
+                                              const Size(100.0,
+                                                  48.0)), // Adjust width
                                         ),
                                         child: Text(
                                           'Cancel',
                                           style: TextStyle(
                                               fontSize:
-                                                  18.0), // Adjust font size
+                                              18.0), // Adjust font size
                                         ),
                                       ),
                                     ],

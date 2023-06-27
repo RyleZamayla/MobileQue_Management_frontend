@@ -67,17 +67,23 @@ class apiProvider{
     }
   }
 
-  getQueues(String endpoint, String userId)async{
+  postQueues(String endpoint, String? userId)async{
     // var fullURL = baseURL + endpoint;
-    final queryParameters = {
-      'userId': 'userId',
+    final body = {
+      'userId': userId,
     };
-    final uri = Uri.http(baseURL, endpoint, queryParameters);
-    final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
-    Response response = await http.get(uri,headers: headers);
-    print(response.body);
+    final jsonBody = convert.jsonEncode(body);
+    print(jsonBody);
+    final uri = Uri.parse(baseURL+endpoint);
+    final headers = {
+      HttpHeaders.contentTypeHeader: 'application/json',
+    };
+    final response = await http.post(
+      uri,
+      headers: headers,
+      body: jsonBody,
+    );
 
-    //converting json data to list
     List<QueuesModel> queues;
     queues = (convert.json.decode(response.body) as List).map((i) =>
         QueuesModel.fromJson(i)).toList();
@@ -86,7 +92,22 @@ class apiProvider{
       print("Successfully fetched json data");
       return queues;
     } else {
-      throw Exception('Failed to load queues');
+      return 'Failed to load queues';
     }
+
+
+
+    // final queryParameters = {
+    //   'userId': 'userId',
+    // };
+    // final uri = Uri.http(baseURL, endpoint, queryParameters);
+    // final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
+    // Response response = await http.get(uri,headers: headers);
+    // print(response.body);
+    //
+    // //converting json data to list
+
+    //
+
   }
 }
