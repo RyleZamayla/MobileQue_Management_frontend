@@ -9,7 +9,6 @@ class apiProvider{
   final String baseURL = "https://ustp-queueing-system.onrender.com/";
 
   postLogin(Map<String,dynamic> credentials, String endpoint)async{
-    print(credentials);
     var fullURL = baseURL + endpoint;
     Response response = await http.post(Uri.parse(fullURL),
       headers: {
@@ -40,7 +39,6 @@ class apiProvider{
         UserModel.fromJson(i)).toList();
 
     if (response.statusCode == 200){
-      print(response.body);
       print("Successfully fetched json data");
       return myModels;
     } else {
@@ -68,12 +66,10 @@ class apiProvider{
   }
 
   postQueues(String endpoint, String? userId)async{
-    // var fullURL = baseURL + endpoint;
     final body = {
       'userId': userId,
     };
     final jsonBody = convert.jsonEncode(body);
-    print(jsonBody);
     final uri = Uri.parse(baseURL+endpoint);
     final headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
@@ -94,20 +90,59 @@ class apiProvider{
     } else {
       return 'Failed to load queues';
     }
+  }
 
+  putQueue(String endpoint, String? userId, String? status)async{
+    final body = {
+      'userId': userId,
+      'status': status??"Pending",
+    };
+    final jsonBody = convert.jsonEncode(body);
+    final uri = Uri.parse(baseURL+endpoint);
+    final headers = {
+      HttpHeaders.contentTypeHeader: 'application/json',
+    };
+    final response = await http.post(
+      uri,
+      headers: headers,
+      body: jsonBody,
+    );
 
+    List<QueuesModel> queues;
+    queues = (convert.json.decode(response.body) as List).map((i) =>
+        QueuesModel.fromJson(i)).toList();
 
-    // final queryParameters = {
-    //   'userId': 'userId',
-    // };
-    // final uri = Uri.http(baseURL, endpoint, queryParameters);
-    // final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
-    // Response response = await http.get(uri,headers: headers);
-    // print(response.body);
-    //
-    // //converting json data to list
+    if (response.statusCode == 200){
+      print("Successfully fetched json data");
+      return queues;
+    } else {
+      return 'Failed to load queues';
+    }
+  }
 
-    //
+  deleteQueue(String endpoint, String? token,String queueId)async{
+    var fullURL = baseURL + endpoint;
 
+    // Make the request using the async/await syntax
+    Map<String, String> body = {'_id': queueId};
+    try {
+      http.Response response = await http.delete(
+        Uri.parse(fullURL),
+        headers: {'Authorization': 'Bearer $token'},
+        body: body,
+      );
+
+      // Check the status code
+      if (response.statusCode == 200) {
+        // The resource was deleted successfully
+        return 'Queue deleted successfully';
+      } else {
+        // An error occurred
+        return 'Error deleting queue';
+      }
+    } catch (e) {
+      // An error occurred
+      print(e);
+    }
   }
 }

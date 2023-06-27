@@ -102,9 +102,8 @@ class _adminDashboardState extends State<adminDashboard> {
                 title: const Text('Logout', style: TextStyle(color: Colors.white)),
                 onTap: () async{
                   SharedPreferences prefs = await SharedPreferences.getInstance();
-                  prefs.remove('myMap');
+                  prefs.remove('token');
                   prefs.remove('userId');
-                  prefs.remove('accessToken');
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (BuildContext ctx) => MyHomePage(title: "Dashboard",)));
                 },

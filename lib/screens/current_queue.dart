@@ -13,9 +13,7 @@ class currentQueue extends StatefulWidget {
 class _currentQueueState extends State<currentQueue> {
   late Future<dynamic> futureQueues;
   bool isGuest = true;
-  String? dialogName, dialogEmail;
   apiProvider api = apiProvider();
-  var userId;
 
 
   buildStudentInfo(AsyncSnapshot snapshot, int index){
@@ -29,7 +27,7 @@ class _currentQueueState extends State<currentQueue> {
             children: [
               Text(
                 "Student Number: ${snapshot.data![index].idNumber}",
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -37,7 +35,7 @@ class _currentQueueState extends State<currentQueue> {
               const SizedBox(height: 16.0),
               Text(
                 "Student Name: ${snapshot.data![index].name}",
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -45,7 +43,7 @@ class _currentQueueState extends State<currentQueue> {
               const SizedBox(height: 16.0),
               Text(
                 "Student Email: ${snapshot.data![index].email}",
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -53,7 +51,7 @@ class _currentQueueState extends State<currentQueue> {
               const SizedBox(height: 16.0),
               Text(
                 "Purpose: ${snapshot.data![index].purpose}",
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -65,13 +63,31 @@ class _currentQueueState extends State<currentQueue> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Done'),
+              child: const Text('Done'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Notify'),
+              child: const Text('Notify'),
+            ),
+            TextButton(
+              onPressed: () {
+                var response = deleteQueue(snapshot.data![index].id);
+                if(response != "Error deleting queue"){
+                  setState((){
+                    futureQueues = fetchID();
+                    Navigator.of(context).pop();
+                  });
+                }else{
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Error deleting queue'),
+                    ),
+                  );
+                }
+              },
+              child: const Text('Delete',style: TextStyle(color: Colors.red)),
             ),
           ],
         ),
@@ -90,7 +106,7 @@ class _currentQueueState extends State<currentQueue> {
             children: [
               Text(
                 "Guest Name: ${snapshot.data![index].name}",
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -98,7 +114,7 @@ class _currentQueueState extends State<currentQueue> {
               const SizedBox(height: 16.0),
               Text(
                 "Guest Email: ${snapshot.data![index].email}",
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -106,7 +122,15 @@ class _currentQueueState extends State<currentQueue> {
               const SizedBox(height: 16.0),
               Text(
                 "Purpose: ${snapshot.data![index].purpose}",
-                style: TextStyle(
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              Text(
+                "status: ${snapshot.data![index].status}",
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -118,13 +142,31 @@ class _currentQueueState extends State<currentQueue> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Done'),
+              child: const Text('Done'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Notify'),
+              child: const Text('Notify'),
+            ),
+            TextButton(
+              onPressed: () {
+                var response = deleteQueue(snapshot.data![index].id);
+                if(response != "Error deleting queue"){
+                  setState((){
+                    futureQueues = fetchID();
+                    Navigator.of(context).pop();
+                  });
+                }else{
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Error deleting queue'),
+                    ),
+                  );
+                }
+              },
+              child: const Text('Delete',style: TextStyle(color: Colors.red)),
             ),
           ],
         ),
@@ -132,9 +174,13 @@ class _currentQueueState extends State<currentQueue> {
     );
   }
 
+  deleteQueue(String queueId)async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return api.deleteQueue('queue/delete', prefs.getString('token'), queueId);
+  }
+
   fetchID()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print("yawa: ${prefs.getString('userId')}");
     return api.postQueues("queue/pending", prefs.getString('userId'));
   }
   
@@ -162,13 +208,13 @@ class _currentQueueState extends State<currentQueue> {
                     width: 36,
                     height: 36,
                     alignment: Alignment.center,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.blue,
                       shape: BoxShape.circle,
                     ),
                     child: Text(
                       'Q#${index + 1}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
@@ -176,7 +222,7 @@ class _currentQueueState extends State<currentQueue> {
                   ),
                   title: Text(
                     snapshot.data![index].purpose,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),

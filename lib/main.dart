@@ -6,8 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  // late var retrievedMapString = prefs.getString('myMap');
-  // late Map<String, String> retrievedMap = convert.jsonDecode(retrievedMapString!);
   var accessToken = prefs.getString('accessToken');
   runApp(MaterialApp(
     title: 'Mobile Queueing Management',

@@ -148,11 +148,8 @@ class _LoginState extends State<Login> {
                         };
                         var response = await api.postLogin(userInfoMap, 'auth/login');
                         if (response != 'Failed to login') {
-
-                          // String myMapString = convert.jsonEncode(response);
-                          // prefs.setString('myMap', myMapString);
-                          // prefs.setString('accessToken', '${response['accessToken']}');
                           prefs.setString('userId', '${response['user']['_id']}');
+                          prefs.setString('token', '${response['accessToken']}');
                           print(response);
                           Navigator.pushReplacement(
                             context,
