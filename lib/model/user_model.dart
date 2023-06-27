@@ -8,19 +8,19 @@ List<UserModel> userModelFromJson(String str) => List<UserModel>.from(json.decod
 String userModelToJson(List<UserModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class UserModel {
-  String name;
-  String userId;
+  String? name;
+  String? userId;
   String? status;
-  String position;
+  String? position;
   String? profilePic;
-  int count;
+  int? count;
 
   UserModel({
-    required this.count,
-    required this.userId,
-    required this.name,
-    required this.status,
-    required this.position,
+    this.count,
+    this.userId,
+    this.name,
+    this.status,
+    this.position,
     this.profilePic,
   });
 

@@ -137,10 +137,14 @@ class _MyHomePageState extends State<MyHomePage> {
                               shape: BoxShape.circle,
                               color: Colors.blue,
                             ),
-                            child: const Icon(
-                              Icons.person,
-                              color: Colors.white,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(25), // Half of the width or height for a perfect circle
+                              child: Image(
+                              image: NetworkImage(snapshot.data![index].profilePic??'https://scontent.fdvo5-1.fna.fbcdn.net/v/t39.30808-6/324429893_692617042404789_8825582010059206302_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeEuGGRS4j1TRnpWy-X7IciFiSnhuT21QT-JKeG5PbVBP8vei6WwmkTDRRj7Yshbp_oOgXKi9I5yuhVxBQGTA9ct&_nc_ohc=cR43Oe7orLkAX8oqv9e&_nc_ht=scontent.fdvo5-1.fna&oh=00_AfBVoA5lCXiUjLB0d8bKiG7RALtAeq036ggnmpmJJW1XTw&oe=649E83B4'),
+                              width: 40,
+                              height: 40,
                             ),
+                          ),
                           ),
                           const SizedBox(height: 8.0),
                           Text(
@@ -166,7 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           const SizedBox(height: 8.0),
                           Text(
-                            "Current Queue: ${snapshot.data![index].count.toString()}",
+                            "Current Queue: ${snapshot.data![index].count??0.toString()}",
                             style: TextStyle(
                               color: Colors.grey,
                             ),
