@@ -40,10 +40,30 @@ class apiProvider{
         UserModel.fromJson(i)).toList();
 
     if (response.statusCode == 200){
+      print(response.body);
       print("Successfully fetched json data");
       return myModels;
     } else {
       throw Exception('Failed to load users');
+    }
+  }
+
+  postAddQueues(Map<String,dynamic> credentials, String endpoint)async{
+    var fullURL = baseURL + endpoint;
+    Response response = await http.post(Uri.parse(fullURL),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      encoding: convert.Encoding.getByName('utf-8'),
+      body: credentials,
+    );
+
+
+    if (response.statusCode == 200){
+      print("Successfully added queue");
+      return convert.json.decode(response.body);
+    } else {
+      return "Failed to add queue";
     }
   }
 

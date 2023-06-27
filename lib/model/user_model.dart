@@ -9,7 +9,7 @@ String userModelToJson(List<UserModel> data) => json.encode(List<dynamic>.from(d
 
 class UserModel {
   String? name;
-  String? userId;
+  String? id;
   String? status;
   String? position;
   String? profilePic;
@@ -17,7 +17,7 @@ class UserModel {
 
   UserModel({
     this.count,
-    this.userId,
+    this.id,
     this.name,
     this.status,
     this.position,
@@ -26,7 +26,7 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
     count: json["count"],
-    userId: json["userId"],
+    id: json["_id"],
     name: json["name"],
     status: json["status"],
     position: json["position"],
@@ -35,7 +35,7 @@ class UserModel {
 
   Map<String, dynamic> toJson() => {
     "count": count,
-    "userId": userId,
+    "_id": id,
     "name": name,
     "status": status,
     "position": position,
