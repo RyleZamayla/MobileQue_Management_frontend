@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisSpacing: 8.0,
                   // Add horizontal spacing between the cards
                   childAspectRatio:
-                  0.75, // Adjust the aspect ratio to fit the content
+                      0.75, // Adjust the aspect ratio to fit the content
                 ),
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
@@ -82,127 +82,172 @@ class _MyHomePageState extends State<MyHomePage> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: const Center(child: Text('Add Queue')),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          width: 3, color: Colors.yellowAccent),
-                                      borderRadius: BorderRadius.circular(50.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder( // Set focused border color
-                                      borderSide: const BorderSide(
-                                          width: 3, color: Colors.yellowAccent),
-                                      borderRadius: BorderRadius.circular(50.0),
-                                    ),
-                                    labelText: 'Student ID',
-                                    labelStyle: TextStyle(color: Colors.black),
-                                  ),
-                                ),
-                                const SizedBox(height: 16.0),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          width: 3, color: Colors.yellowAccent),
-                                      borderRadius: BorderRadius.circular(50.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder( // Set focused border color
-                                      borderSide: const BorderSide(
-                                          width: 3, color: Colors.yellowAccent),
-                                      borderRadius: BorderRadius.circular(50.0),
-                                    ),
-                                    labelText: 'Student Name',
-                                    labelStyle: TextStyle(color: Colors.black),
-                                  ),
-                                ),
-                                const SizedBox(height: 16.0),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          width: 3, color: Colors.yellowAccent),
-                                      borderRadius: BorderRadius.circular(50.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder( // Set focused border color
-                                      borderSide: const BorderSide(
-                                          width: 3, color: Colors.yellowAccent),
-                                      borderRadius: BorderRadius.circular(50.0),
-                                    ),
-                                    labelText: 'Student Email',
-                                    labelStyle: TextStyle(color: Colors.black),
-                                  ),
-                                ),
-                                const SizedBox(height: 16.0),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          width: 3, color: Colors.yellowAccent),
-                                      borderRadius: BorderRadius.circular(50.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder( // Set focused border color
-                                      borderSide: const BorderSide(
-                                          width: 3, color: Colors.yellowAccent),
-                                      borderRadius: BorderRadius.circular(50.0),
-                                    ),
-                                    labelText: 'Purpose',
-                                    labelStyle: TextStyle(color: Colors.black),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            actions: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                              title: const Center(child: Text('Add Queue')),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    style: ButtonStyle(
-                                      shape: MaterialStateProperty.all(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(20.0),
-                                        ),
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            width: 3,
+                                            color: Colors.yellowAccent),
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
                                       ),
-                                      foregroundColor: MaterialStateProperty.all(Colors.white),
-                                      backgroundColor: MaterialStateProperty.all(const Color(0xFF05046a)),
-                                      minimumSize: MaterialStateProperty.all(const Size(150.0, 48.0)), // Adjust width
-                                    ),
-                                    child: Text(
-                                      'Submit',
-                                      style: TextStyle(fontSize: 18.0), // Adjust font size
+                                      focusedBorder: OutlineInputBorder(
+                                        // Set focused border color
+                                        borderSide: const BorderSide(
+                                            width: 3,
+                                            color: Colors.yellowAccent),
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
+                                      ),
+                                      labelText: 'Student ID',
+                                      labelStyle:
+                                          TextStyle(color: Colors.black),
                                     ),
                                   ),
-                                  const SizedBox(width: 16.0), // Add spacing between buttons
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    style: ButtonStyle(
-                                      shape: MaterialStateProperty.all(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(20.0),
-                                        ),
+                                  const SizedBox(height: 16.0),
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            width: 3,
+                                            color: Colors.yellowAccent),
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
                                       ),
-                                      foregroundColor: MaterialStateProperty.all(Colors.white),
-                                      backgroundColor: MaterialStateProperty.all(const Color(0xFF05046a)),
-                                      minimumSize: MaterialStateProperty.all(const Size(150.0, 48.0)), // Adjust width
+                                      focusedBorder: OutlineInputBorder(
+                                        // Set focused border color
+                                        borderSide: const BorderSide(
+                                            width: 3,
+                                            color: Colors.yellowAccent),
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
+                                      ),
+                                      labelText: 'Student Name',
+                                      labelStyle:
+                                          TextStyle(color: Colors.black),
                                     ),
-                                    child: Text(
-                                      'Cancel',
-                                      style: TextStyle(fontSize: 18.0), // Adjust font size
+                                  ),
+                                  const SizedBox(height: 16.0),
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            width: 3,
+                                            color: Colors.yellowAccent),
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        // Set focused border color
+                                        borderSide: const BorderSide(
+                                            width: 3,
+                                            color: Colors.yellowAccent),
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
+                                      ),
+                                      labelText: 'Student Email',
+                                      labelStyle:
+                                          TextStyle(color: Colors.black),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16.0),
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            width: 3,
+                                            color: Colors.yellowAccent),
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        // Set focused border color
+                                        borderSide: const BorderSide(
+                                            width: 3,
+                                            color: Colors.yellowAccent),
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
+                                      ),
+                                      labelText: 'Purpose',
+                                      labelStyle:
+                                          TextStyle(color: Colors.black),
                                     ),
                                   ),
                                 ],
                               ),
-                            ],
-
-                          );
+                              actions: [
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        style: ButtonStyle(
+                                          shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                          ),
+                                          foregroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.white),
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  const Color(0xFF05046a)),
+                                          minimumSize:
+                                              MaterialStateProperty.all(
+                                                  const Size(150.0,
+                                                      48.0)), // Adjust width
+                                        ),
+                                        child: Text(
+                                          'Submit',
+                                          style: TextStyle(
+                                              fontSize:
+                                                  18.0), // Adjust font size
+                                        ),
+                                      ),
+                                      const SizedBox(width: 16.0),
+                                      // Add spacing between buttons
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        style: ButtonStyle(
+                                          shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                          ),
+                                          foregroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.white),
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  const Color(0xFF05046a)),
+                                          minimumSize:
+                                              MaterialStateProperty.all(
+                                                  const Size(150.0,
+                                                      48.0)), // Adjust width
+                                        ),
+                                        child: Text(
+                                          'Cancel',
+                                          style: TextStyle(
+                                              fontSize:
+                                                  18.0), // Adjust font size
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ]);
                         },
                       );
                     },
