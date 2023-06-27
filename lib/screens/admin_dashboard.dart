@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:mobilequemanagement_frontend/screens/current_queue.dart';
 import 'package:mobilequemanagement_frontend/screens/feed.dart';
 import 'package:mobilequemanagement_frontend/screens/queue_history.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'materials/settings.dart';
 
 class adminDashboard extends StatefulWidget {
-  adminDashboard({Key? key, required this.futureAdmin}) : super(key: key);
+  adminDashboard({Key? key, this.futureAdmin}) : super(key: key);
 
-  Map<String, dynamic> futureAdmin;
+  Map<String, dynamic>? futureAdmin;
 
   @override
   State<adminDashboard> createState() => _adminDashboardState();
@@ -29,7 +30,7 @@ class _adminDashboardState extends State<adminDashboard> {
 
   @override
   void initState() {
-    admin = widget.futureAdmin;
+    admin = widget.futureAdmin!;
     super.initState();
   }
 
@@ -99,14 +100,13 @@ class _adminDashboardState extends State<adminDashboard> {
                 // Set the tile color to transparent
                 leading: const Icon(Icons.logout, color: Colors.white),
                 title: const Text('Logout', style: TextStyle(color: Colors.white)),
-                onTap: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => const MyHomePage(title: 'Dashboard'),
-                    ),
-                        (Route<dynamic> route) => false,
-                  );
+                onTap: () async{
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  prefs.remove('myMap');
+                  prefs.remove('userId');
+                  prefs.remove('accessToken');
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (BuildContext ctx) => MyHomePage(title: "Dashboard",)));
                 },
               ),
             ],

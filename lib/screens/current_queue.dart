@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobilequemanagement_frontend/provider/api_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class currentQueue extends StatefulWidget {
   currentQueue({this.userId,Key? key}) : super(key: key);
@@ -14,6 +15,8 @@ class _currentQueueState extends State<currentQueue> {
   bool isGuest = true;
   String? dialogName, dialogEmail;
   apiProvider api = apiProvider();
+  var userId;
+
 
   buildStudentInfo(AsyncSnapshot snapshot, int index){
     return Center(
@@ -128,10 +131,16 @@ class _currentQueueState extends State<currentQueue> {
       ),
     );
   }
+
+  fetchID()async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("yawa: ${prefs.getString('userId')}");
+    return api.postQueues("queue/pending", prefs.getString('userId'));
+  }
   
   @override
   void initState() {
-    futureQueues = api.getQueues("queue/pending", "64967cfcb2e50f4969ccd5b4");
+    futureQueues = fetchID();
     super.initState();
   }
   @override

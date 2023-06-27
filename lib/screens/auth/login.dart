@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobilequemanagement_frontend/screens/admin_dashboard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../provider/api_provider.dart';
 
 class Login extends StatefulWidget {
@@ -139,14 +140,20 @@ class _LoginState extends State<Login> {
                   _errorMessage(),
                   ElevatedButton(
                     onPressed: () async {
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
                       if (formKey.currentState!.validate()) {
                         Map<String, dynamic> userInfoMap = {
                           'email': _controllerEmail.text,
                           'password': _controllerPassword.text
                         };
-                        var response = await api.postLogin(
-                            userInfoMap, 'auth/login');
+                        var response = await api.postLogin(userInfoMap, 'auth/login');
                         if (response != 'Failed to login') {
+
+                          // String myMapString = convert.jsonEncode(response);
+                          // prefs.setString('myMap', myMapString);
+                          // prefs.setString('accessToken', '${response['accessToken']}');
+                          prefs.setString('userId', '${response['user']['_id']}');
+                          print(response);
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

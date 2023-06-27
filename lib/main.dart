@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:mobilequemanagement_frontend/screens/admin_dashboard.dart';
 import 'package:mobilequemanagement_frontend/screens/feed.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const QueManagement());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  // late var retrievedMapString = prefs.getString('myMap');
+  // late Map<String, String> retrievedMap = convert.jsonDecode(retrievedMapString!);
+  var accessToken = prefs.getString('accessToken');
+  runApp(MaterialApp(
+    title: 'Mobile Queueing Management',
+    theme: ThemeData(
+      primaryColor: Colors.white,
+      primaryColorDark: const Color(0xFF05046a),
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.amber),
+    ),
+    home: accessToken == null ? const MyHomePage(title: "Dashboard"): adminDashboard(),
+    debugShowCheckedModeBanner: false,
+  )
+  );
 }
 
-class QueManagement extends StatelessWidget {
-  const QueManagement({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: Colors.white,
-        primaryColorDark: const Color(0xFF05046a),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.amber),
-      ),
-      home: const MyHomePage(title:"Dashboard"),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-
-}
