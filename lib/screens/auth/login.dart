@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobilequemanagement_frontend/screens/admin_dashboard.dart';
-
 import '../../provider/api_provider.dart';
 
 class Login extends StatefulWidget {
@@ -18,10 +17,12 @@ class _LoginState extends State<Login> {
   final TextEditingController _controllerPassword = TextEditingController();
   var formKey = GlobalKey<FormState>();
 
-  Widget _errorMessage(){
-    return Text (errorMessage == '' ? '' : "$errorMessage",style: const TextStyle(color: Colors.red),);
+  Widget _errorMessage() {
+    return Text(
+      errorMessage == '' ? '' : "$errorMessage",
+      style: const TextStyle(color: Colors.red),
+    );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -29,65 +30,104 @@ class _LoginState extends State<Login> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Container(
+              height: 200,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/background_student.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            const Text(
+              'QUEUE SYSTEM',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF05046a),
+              ),
+            ),
+            const SizedBox(height: 30),
             Form(
-              key:formKey,
+              key: formKey,
               child: Column(
                 children: [
-                  const SizedBox(height: 90),
-                  const SizedBox(
-                    height: 300,
-                    width: 300,
-                    child: InkWell(
-                      child: Image(
-                        image: AssetImage("assets/background_student.jpg"),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 30),
                   TextFormField(
                     controller: _controllerEmail,
                     decoration: InputDecoration(
-                        labelText: 'Email',
-                        hintText: 'Enter your email',
-                        fillColor: Colors.white,
-                        filled: true,
-                        contentPadding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: const BorderSide(color: Colors.grey)),
-                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: BorderSide(color: Colors.grey.shade400)),
-                        errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: const BorderSide(color: Colors.red, width: 2.0)),
-                        focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: const BorderSide(color: Colors.red, width: 2.0))),
+                      labelText: 'Email',
+                      labelStyle: TextStyle(color: Colors.black),
+                      hintText: 'Enter your email',
+                      fillColor: Colors.white,
+                      filled: true,
+                      contentPadding:
+                      const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                        borderSide: BorderSide(color: Colors.black, width: 2.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                        borderSide: BorderSide(color: Colors.black, width: 2.0),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                        borderSide: BorderSide(color: Colors.red, width: 4.0),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                        borderSide: BorderSide(color: Colors.red, width: 4.0),
+                      ),
+                    ),
                     validator: (val) {
-                      if(!(val!.isEmpty) && !RegExp(r"^[a-zA-Z\d.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z\d](?:[a-zA-Z\d-]{0,253}[a-zA-Z\d])?(?:\.[a-zA-Z\d](?:[a-zA-Z\d-]{0,253}[a-zA-Z\d])?)*$").hasMatch(val)){
-                        return "Enter a valid email address";
+                      if (!(val!.isEmpty) &&
+                          !RegExp(
+                              r"^[a-zA-Z\d.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z\d](?:[a-zA-Z\d-]{0,253}[a-zA-Z\d])?(?:\.[a-zA-Z\d](?:[a-zA-Z\d-]{0,253}[a-zA-Z\d])?)*$")
+                              .hasMatch(val)) {
+                        return 'Enter a valid email address';
                       }
                       return null;
                     },
                   ),
-                  const SizedBox(height: 30,),
+                  const SizedBox(height: 20),
                   TextFormField(
                     obscureText: !_passwordVisible,
                     controller: _controllerPassword,
                     decoration: InputDecoration(
                       labelText: 'Password',
+                      labelStyle: TextStyle(color: Colors.black),
                       hintText: 'Enter your password',
                       fillColor: Colors.white,
                       filled: true,
-                      contentPadding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: const BorderSide(color: Colors.grey)),
-                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: BorderSide(color: Colors.grey.shade400)),
-                      errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: const BorderSide(color: Colors.red, width: 2.0)),
-                      focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: const BorderSide(color: Colors.red, width: 2.0)),
-                      // Here is key idea
+                      contentPadding:
+                      const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                        borderSide: BorderSide(color: Colors.black, width: 2.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                        borderSide: BorderSide(color: Colors.black, width: 2.0),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                        borderSide: BorderSide(color: Colors.red, width: 4.0),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                        borderSide: BorderSide(color: Colors.red, width: 4.0),
+                      ),
+
                       suffixIcon: IconButton(
                         icon: Icon(
-                          // Based on passwordVisible state choose the icon
                           _passwordVisible
                               ? Icons.visibility
                               : Icons.visibility_off,
                           color: Theme.of(context).primaryColorDark,
                         ),
                         onPressed: () {
-                          // Update the state i.e. toggle the state of passwordVisible variable
                           setState(() {
                             _passwordVisible = !_passwordVisible;
                           });
@@ -95,41 +135,65 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20,),
+                  const SizedBox(height: 20),
                   _errorMessage(),
                   ElevatedButton(
-                    onPressed: ()async{
-                      if (formKey.currentState!.validate()){
-                        Map<String,dynamic> userInfoMap = {
-                          "email": _controllerEmail.text,
-                          "password": _controllerPassword.text
+                    onPressed: () async {
+                      if (formKey.currentState!.validate()) {
+                        Map<String, dynamic> userInfoMap = {
+                          'email': _controllerEmail.text,
+                          'password': _controllerPassword.text
                         };
-                        var response = await api.postLogin(userInfoMap, "auth/login");
-                        if(response != "Failed to login"){
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (BuildContext ctx) => adminDashboard(futureAdmin: response)));
-                        }else{
+                        var response = await api.postLogin(
+                            userInfoMap, 'auth/login');
+                        if (response != 'Failed to login') {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext ctx) =>
+                                  adminDashboard(futureAdmin: response),
+                            ),
+                          );
+                        } else {
                           setState(() {
-                            errorMessage = "Failed to login";
+                            errorMessage = 'Failed to login';
                           });
                         }
                       }
                     },
-                    child: Text('Login'.toUpperCase(),
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        )
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.circular(20.0),
+                        ),
+                      ),
+                      foregroundColor:
+                      MaterialStateProperty.all(
+                          Colors.white),
+                      backgroundColor:
+                      MaterialStateProperty.all(
+                          const Color(0xFF05046a)),
+                      minimumSize:
+                      MaterialStateProperty.all(
+                          const Size(150.0,
+                              48.0)),
                     ),
-                  )
-                  // _loginOrRegisterButton(),
+                    child: Text(
+                      'Login',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ],
         ),
-      )
+      ),
     );
   }
 }

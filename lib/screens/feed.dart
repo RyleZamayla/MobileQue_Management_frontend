@@ -201,10 +201,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                           backgroundColor:
                                               MaterialStateProperty.all(
                                                   const Color(0xFF05046a)),
-                                          minimumSize:
-                                              MaterialStateProperty.all(
-                                                  const Size(150.0,
-                                                      48.0)), // Adjust width
+                                            minimumSize:
+                                            MaterialStateProperty.all(
+                                                const Size(100.0,
+                                                    48.0)),
                                         ),
                                         child: Text(
                                           'Submit',
@@ -213,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   18.0), // Adjust font size
                                         ),
                                       ),
-                                      const SizedBox(width: 16.0),
+                                      const SizedBox(width: 20.0),
                                       // Add spacing between buttons
                                       TextButton(
                                         onPressed: () {
@@ -234,7 +234,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   const Color(0xFF05046a)),
                                           minimumSize:
                                               MaterialStateProperty.all(
-                                                  const Size(150.0,
+                                                  const Size(100.0,
                                                       48.0)), // Adjust width
                                         ),
                                         child: Text(
