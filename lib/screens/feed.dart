@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobilequemanagement_frontend/provider/api_provider.dart';
 import 'package:mobilequemanagement_frontend/screens/qr_scanner.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'auth/login.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -20,11 +21,17 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController purpose = TextEditingController();
   late Future<dynamic> futureUsers;
   var formKey = GlobalKey<FormState>();
+  var formKeyGuest = GlobalKey<FormState>();
   apiProvider api = apiProvider();
+  MaterialColor? color;
+
+  fetchUsers()async{
+    return api.getUsers("queue/count");
+  }
 
   @override
   void initState() {
-    futureUsers = api.getUsers("queue/count");
+    futureUsers = fetchUsers();
     super.initState();
   }
 
@@ -77,261 +84,566 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisSpacing: 8.0,
                   // Add horizontal spacing between the cards
                   childAspectRatio:
-                      0.75, // Adjust the aspect ratio to fit the content
+                  0.75, // Adjust the aspect ratio to fit the content
                 ),
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
+                  if(snapshot.data![index].status == null || snapshot.data![index].status == "Not Available"){
+                    color = Colors.red;
+                  }else{
+                    color = Colors.green;
+                  }
                   return GestureDetector(
                     onTap: () {
-                      print(snapshot.data![index].id);
                       userId.text = snapshot.data![index].id;
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Center(
-                            child: SingleChildScrollView(
-                              reverse: true,
-                              child: AlertDialog(
-                                  title: const Center(child: Text('Add Queue')),
-                                  content: Form(
-                                      key: formKey,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          TextFormField(
-                                            controller: idNumber,
-                                            keyboardType: TextInputType.number,
-                                            decoration: InputDecoration(
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                    width: 3,
-                                                    color: Colors.yellowAccent),
-                                                borderRadius:
-                                                BorderRadius.circular(50.0),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                // Set focused border color
-                                                borderSide: const BorderSide(
-                                                    width: 3,
-                                                    color: Colors.yellowAccent),
-                                                borderRadius:
-                                                BorderRadius.circular(50.0),
-                                              ),
-                                              labelText: 'Student ID',
-                                              labelStyle:
-                                              TextStyle(color: Colors.black),
-                                            ),
-                                            validator: (value) {
-                                              return (value == '') ? 'Please enter your ID number' : null;
-                                            },
-                                          ),
-                                          const SizedBox(height: 16.0),
-                                          TextFormField(
-                                            controller: name,
-                                            keyboardType: TextInputType.name,
-                                            decoration: InputDecoration(
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                    width: 3,
-                                                    color: Colors.yellowAccent),
-                                                borderRadius:
-                                                BorderRadius.circular(50.0),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                // Set focused border color
-                                                borderSide: const BorderSide(
-                                                    width: 3,
-                                                    color: Colors.yellowAccent),
-                                                borderRadius:
-                                                BorderRadius.circular(50.0),
-                                              ),
-                                              labelText: 'Student Name',
-                                              labelStyle:
-                                              TextStyle(color: Colors.black),
-                                            ),
-                                            validator: (value) {
-                                              return (value == '') ? 'Please enter your name' : null;
-                                            },
-                                          ),
-                                          const SizedBox(height: 16.0),
-                                          TextFormField(
-                                            controller: email,
-                                            keyboardType: TextInputType.emailAddress,
-                                            decoration: InputDecoration(
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                    width: 3,
-                                                    color: Colors.yellowAccent),
-                                                borderRadius:
-                                                BorderRadius.circular(50.0),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                // Set focused border color
-                                                borderSide: const BorderSide(
-                                                    width: 3,
-                                                    color: Colors.yellowAccent),
-                                                borderRadius:
-                                                BorderRadius.circular(50.0),
-                                              ),
-                                              labelText: 'Student Email',
-                                              labelStyle:
-                                              TextStyle(color: Colors.black),
-                                            ),
-                                            validator: (val) {
-                                              if(!(val!.isEmpty) && !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$").hasMatch(val)){
-                                                return "Enter a valid email address";
-                                              }
-                                            },
-                                          ),
-                                          const SizedBox(height: 16.0),
-                                          TextFormField(
-                                            controller: purpose,
-                                            keyboardType: TextInputType.multiline,
-                                            decoration: InputDecoration(
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                    width: 3,
-                                                    color: Colors.yellowAccent),
-                                                borderRadius:
-                                                BorderRadius.circular(50.0),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                // Set focused border color
-                                                borderSide: const BorderSide(
-                                                    width: 3,
-                                                    color: Colors.yellowAccent),
-                                                borderRadius:
-                                                BorderRadius.circular(50.0),
-                                              ),
-                                              labelText: 'Purpose',
-                                              labelStyle:
-                                              TextStyle(color: Colors.black),
-                                            ),
-                                            validator: (value) {
-                                              return (value == '') ? 'Please enter your purpose' : null;
-                                            },
-                                          ),
-                                        ],
-                                      )),
-                                  actions: [
-                                    Expanded(
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          TextButton(
-                                            onPressed: ()async{
-                                              if(formKey.currentState!.validate()){
-                                                Map<String,dynamic> userInfoMap = {
-                                                  "userId": userId.text,
-                                                  "email": email.text,
-                                                  "name": name.text,
-                                                  "purpose": purpose.text,
-                                                  "idNumber": idNumber.text
-                                                };
-                                                var response = await api.postLogin(userInfoMap, "queue/");
-                                                if(response != "Failed to add queue"){
-                                                  setState(() {
-                                                    userId.clear();
-                                                    email.clear();
-                                                    name.clear();
-                                                    purpose.clear();
-                                                    idNumber.clear();
-                                                  });
-                                                  ScaffoldMessenger.of(context).showSnackBar(
-                                                    SnackBar(
-                                                      content: Text('Successfuly added queue'),
-                                                    ),
-                                                  );
-                                                  Navigator.of(context).pop();
-                                                }else{
-                                                  setState(() {
-                                                    userId.clear();
-                                                    email.clear();
-                                                    name.clear();
-                                                    purpose.clear();
-                                                    idNumber.clear();
-                                                  });
-                                                  ScaffoldMessenger.of(context).showSnackBar(
-                                                    SnackBar(
-                                                      content: Text('Failed to add queue'),
-                                                    ),
-                                                  );
-                                                }
-                                              }
+                      if(snapshot.data![index].status == null || snapshot.data![index].status == "Not Available"){
+                        Fluttertoast.showToast(
+                          msg: '${snapshot.data![index].name} is Not Available',
+                          textColor: color,
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                        );
+                      }else{
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Center(
+                              child: SingleChildScrollView(
+                                reverse: true,
+                                child: AlertDialog(
+                                    title: const Center(child: Text('Add Queue')),
+                                    content: Column(
+                                      children: const [Center(child: Text("I'm a _______"))],
+                                    ),
+                                    actions: [
+                                      Expanded(
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            TextButton(
+                                              onPressed: ()async{
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (BuildContext context) {
+                                                    return Center(
+                                                      child: SingleChildScrollView(
+                                                        reverse: true,
+                                                        child: AlertDialog(
+                                                            title: const Center(child: Text('Add Queue')),
+                                                            content: Form(
+                                                                key: formKey,
+                                                                child: Column(
+                                                                  mainAxisSize: MainAxisSize.min,
+                                                                  children: [
+                                                                    TextFormField(
+                                                                      controller: idNumber,
+                                                                      keyboardType: TextInputType.number,
+                                                                      decoration: InputDecoration(
+                                                                        enabledBorder: OutlineInputBorder(
+                                                                          borderSide: const BorderSide(
+                                                                              width: 3,
+                                                                              color: Colors.yellowAccent),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(50.0),
+                                                                        ),
+                                                                        focusedBorder: OutlineInputBorder(
+                                                                          // Set focused border color
+                                                                          borderSide: const BorderSide(
+                                                                              width: 3,
+                                                                              color: Colors.yellowAccent),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(50.0),
+                                                                        ),
+                                                                        labelText: 'Student ID',
+                                                                        labelStyle:
+                                                                        const TextStyle(color: Colors.black),
+                                                                      ),
+                                                                      validator: (value) {
+                                                                        return (value == '') ? 'Please enter your ID number' : null;
+                                                                      },
+                                                                    ),
+                                                                    const SizedBox(height: 16.0),
+                                                                    TextFormField(
+                                                                      controller: name,
+                                                                      keyboardType: TextInputType.name,
+                                                                      decoration: InputDecoration(
+                                                                        enabledBorder: OutlineInputBorder(
+                                                                          borderSide: const BorderSide(
+                                                                              width: 3,
+                                                                              color: Colors.yellowAccent),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(50.0),
+                                                                        ),
+                                                                        focusedBorder: OutlineInputBorder(
+                                                                          // Set focused border color
+                                                                          borderSide: const BorderSide(
+                                                                              width: 3,
+                                                                              color: Colors.yellowAccent),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(50.0),
+                                                                        ),
+                                                                        labelText: 'Student Name',
+                                                                        labelStyle: const TextStyle(color: Colors.black),
+                                                                      ),
+                                                                      validator: (value) {
+                                                                        return (value == '') ? 'Please enter your name' : null;
+                                                                      },
+                                                                    ),
+                                                                    const SizedBox(height: 16.0),
+                                                                    TextFormField(
+                                                                      controller: email,
+                                                                      keyboardType: TextInputType.emailAddress,
+                                                                      decoration: InputDecoration(
+                                                                        enabledBorder: OutlineInputBorder(
+                                                                          borderSide: const BorderSide(
+                                                                              width: 3,
+                                                                              color: Colors.yellowAccent),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(50.0),
+                                                                        ),
+                                                                        focusedBorder: OutlineInputBorder(
+                                                                          // Set focused border color
+                                                                          borderSide: const BorderSide(
+                                                                              width: 3,
+                                                                              color: Colors.yellowAccent),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(50.0),
+                                                                        ),
+                                                                        labelText: 'Student Email',
+                                                                        labelStyle: const TextStyle(color: Colors.black),
+                                                                      ),
+                                                                      validator: (val) {
+                                                                        if(!(val!.isEmpty) && !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$").hasMatch(val)){
+                                                                          return "Enter a valid email address";
+                                                                        }
+                                                                      },
+                                                                    ),
+                                                                    const SizedBox(height: 16.0),
+                                                                    TextFormField(
+                                                                      controller: purpose,
+                                                                      keyboardType: TextInputType.multiline,
+                                                                      decoration: InputDecoration(
+                                                                        enabledBorder: OutlineInputBorder(
+                                                                          borderSide: const BorderSide(
+                                                                              width: 3,
+                                                                              color: Colors.yellowAccent),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(50.0),
+                                                                        ),
+                                                                        focusedBorder: OutlineInputBorder(
+                                                                          // Set focused border color
+                                                                          borderSide: const BorderSide(
+                                                                              width: 3,
+                                                                              color: Colors.yellowAccent),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(50.0),
+                                                                        ),
+                                                                        labelText: 'Purpose',
+                                                                        labelStyle: const TextStyle(color: Colors.black),
+                                                                      ),
+                                                                      validator: (value) {
+                                                                        return (value == '') ? 'Please enter your purpose' : null;
+                                                                      },
+                                                                    ),
+                                                                  ],
+                                                                )),
+                                                            actions: [
+                                                              Expanded(
+                                                                child: Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                  children: [
+                                                                    TextButton(
+                                                                      onPressed: ()async{
+                                                                        if(formKey.currentState!.validate()){
+                                                                          Map<String,dynamic> userInfoMap = {
+                                                                            "userId": userId.text,
+                                                                            "email": email.text,
+                                                                            "name": name.text,
+                                                                            "purpose": purpose.text,
+                                                                            "idNumber": idNumber.text
+                                                                          };
+                                                                          var response = await api.postLogin(userInfoMap, "queue/");
+                                                                          if(response != "Failed to add queue"){
+                                                                            setState(() {
+                                                                              userId.clear();
+                                                                              email.clear();
+                                                                              name.clear();
+                                                                              purpose.clear();
+                                                                              idNumber.clear();
+                                                                              futureUsers = fetchUsers();
+                                                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                                                const SnackBar(
+                                                                                  content: Text('Successfully added queue'),
+                                                                                ),
+                                                                              );
+                                                                              Navigator.of(context).pop();
+                                                                            });
+                                                                          }else{
+                                                                            setState(() {
+                                                                              userId.clear();
+                                                                              email.clear();
+                                                                              name.clear();
+                                                                              purpose.clear();
+                                                                              idNumber.clear();
+                                                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                                                const SnackBar(
+                                                                                  content: Text('Failed to add queue'),
+                                                                                ),
+                                                                              );
+                                                                            });
+                                                                          }
+                                                                        }
 
 
-                                            },
-                                            style: ButtonStyle(
-                                              shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20.0),
+                                                                      },
+                                                                      style: ButtonStyle(
+                                                                        shape: MaterialStateProperty.all(
+                                                                          RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                            BorderRadius.circular(20.0),
+                                                                          ),
+                                                                        ),
+                                                                        foregroundColor:
+                                                                        MaterialStateProperty.all(
+                                                                            Colors.white),
+                                                                        backgroundColor:
+                                                                        MaterialStateProperty.all(
+                                                                            const Color(0xFF05046a)),
+                                                                        minimumSize:
+                                                                        MaterialStateProperty.all(
+                                                                            const Size(100.0,
+                                                                                48.0)),
+                                                                      ),
+                                                                      child: const Text(
+                                                                        'Submit',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                            18.0), // Adjust font size
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(width: 20.0),
+                                                                    // Add spacing between buttons
+                                                                    TextButton(
+                                                                      onPressed: () {
+                                                                        setState(() {
+                                                                          userId.clear();
+                                                                          email.clear();
+                                                                          name.clear();
+                                                                          purpose.clear();
+                                                                          idNumber.clear();
+                                                                        });
+                                                                        Navigator.of(context).pop();
+                                                                      },
+                                                                      style: ButtonStyle(
+                                                                        shape: MaterialStateProperty.all(
+                                                                          RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                            BorderRadius.circular(20.0),
+                                                                          ),
+                                                                        ),
+                                                                        foregroundColor:
+                                                                        MaterialStateProperty.all(
+                                                                            Colors.white),
+                                                                        backgroundColor:
+                                                                        MaterialStateProperty.all(
+                                                                            const Color(0xFF05046a)),
+                                                                        minimumSize:
+                                                                        MaterialStateProperty.all(
+                                                                            const Size(100.0,
+                                                                                48.0)), // Adjust width
+                                                                      ),
+                                                                      child: const Text(
+                                                                        'Cancel',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                            18.0), // Adjust font size
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            ]),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              style: ButtonStyle(
+                                                shape: MaterialStateProperty.all(
+                                                  RoundedRectangleBorder(
+                                                    borderRadius:
+                                                    BorderRadius.circular(20.0),
+                                                  ),
                                                 ),
-                                              ),
-                                              foregroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.white),
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      const Color(0xFF05046a)),
+                                                foregroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.white),
+                                                backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    const Color(0xFF05046a)),
                                                 minimumSize:
                                                 MaterialStateProperty.all(
                                                     const Size(100.0,
                                                         48.0)),
-                                            ),
-                                            child: Text(
-                                              'Submit',
-                                              style: TextStyle(
-                                                  fontSize:
-                                                      18.0), // Adjust font size
-                                            ),
-                                          ),
-                                          const SizedBox(width: 20.0),
-                                          // Add spacing between buttons
-                                          TextButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                userId.clear();
-                                                email.clear();
-                                                name.clear();
-                                                purpose.clear();
-                                                idNumber.clear();
-                                              });
-                                              Navigator.of(context).pop();
-                                            },
-                                            style: ButtonStyle(
-                                              shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20.0),
-                                                ),
                                               ),
-                                              foregroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.white),
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      const Color(0xFF05046a)),
-                                              minimumSize:
-                                                  MaterialStateProperty.all(
-                                                      const Size(100.0,
-                                                          48.0)), // Adjust width
+                                              child: const Text(
+                                                'Student',
+                                                style: TextStyle(
+                                                    fontSize:
+                                                    18.0), // Adjust font size
+                                              ),
                                             ),
-                                            child: Text(
-                                              'Cancel',
-                                              style: TextStyle(
-                                                  fontSize:
-                                                      18.0), // Adjust font size
+                                            const SizedBox(width: 20.0),
+                                            // Add spacing between buttons
+                                            TextButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (BuildContext context) {
+                                                    return Center(
+                                                      child: SingleChildScrollView(
+                                                        reverse: true,
+                                                        child: AlertDialog(
+                                                            title: const Center(child: Text('Add Queue')),
+                                                            content: Form(
+                                                                key: formKeyGuest,
+                                                                child: Column(
+                                                                  mainAxisSize: MainAxisSize.min,
+                                                                  children: [
+                                                                    TextFormField(
+                                                                      controller: name,
+                                                                      keyboardType: TextInputType.name,
+                                                                      decoration: InputDecoration(
+                                                                        enabledBorder: OutlineInputBorder(
+                                                                          borderSide: const BorderSide(
+                                                                              width: 3,
+                                                                              color: Colors.yellowAccent),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(50.0),
+                                                                        ),
+                                                                        focusedBorder: OutlineInputBorder(
+                                                                          // Set focused border color
+                                                                          borderSide: const BorderSide(
+                                                                              width: 3,
+                                                                              color: Colors.yellowAccent),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(50.0),
+                                                                        ),
+                                                                        labelText: 'Guest Name',
+                                                                        labelStyle: const TextStyle(color: Colors.black),
+                                                                      ),
+                                                                      validator: (value) {
+                                                                        return (value == '') ? 'Please enter your name' : null;
+                                                                      },
+                                                                    ),
+                                                                    const SizedBox(height: 16.0),
+                                                                    TextFormField(
+                                                                      controller: email,
+                                                                      keyboardType: TextInputType.emailAddress,
+                                                                      decoration: InputDecoration(
+                                                                        enabledBorder: OutlineInputBorder(
+                                                                          borderSide: const BorderSide(
+                                                                              width: 3,
+                                                                              color: Colors.yellowAccent),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(50.0),
+                                                                        ),
+                                                                        focusedBorder: OutlineInputBorder(
+                                                                          // Set focused border color
+                                                                          borderSide: const BorderSide(
+                                                                              width: 3,
+                                                                              color: Colors.yellowAccent),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(50.0),
+                                                                        ),
+                                                                        labelText: 'Guest Email',
+                                                                        labelStyle: const TextStyle(color: Colors.black),
+                                                                      ),
+                                                                      validator: (val) {
+                                                                        if(!(val!.isEmpty) && !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$").hasMatch(val)){
+                                                                          return "Enter a valid email address";
+                                                                        }
+                                                                      },
+                                                                    ),
+                                                                    const SizedBox(height: 16.0),
+                                                                    TextFormField(
+                                                                      controller: purpose,
+                                                                      keyboardType: TextInputType.multiline,
+                                                                      decoration: InputDecoration(
+                                                                        enabledBorder: OutlineInputBorder(
+                                                                          borderSide: const BorderSide(
+                                                                              width: 3,
+                                                                              color: Colors.yellowAccent),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(50.0),
+                                                                        ),
+                                                                        focusedBorder: OutlineInputBorder(
+                                                                          // Set focused border color
+                                                                          borderSide: const BorderSide(
+                                                                              width: 3,
+                                                                              color: Colors.yellowAccent),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(50.0),
+                                                                        ),
+                                                                        labelText: 'Purpose',
+                                                                        labelStyle: const TextStyle(color: Colors.black),
+                                                                      ),
+                                                                      validator: (value) {
+                                                                        return (value == '') ? 'Please enter your purpose' : null;
+                                                                      },
+                                                                    ),
+                                                                  ],
+                                                                )),
+                                                            actions: [
+                                                              Expanded(
+                                                                child: Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                  children: [
+                                                                    TextButton(
+                                                                      onPressed: ()async{
+                                                                        if(formKeyGuest.currentState!.validate()){
+                                                                          Map<String,dynamic> userInfoMap = {
+                                                                            "userId": userId.text,
+                                                                            "email": email.text,
+                                                                            "name": name.text,
+                                                                            "purpose": purpose.text,
+                                                                          };
+                                                                          var response = await api.postLogin(userInfoMap, "queue/");
+                                                                          if(response != "Failed to add queue"){
+                                                                            setState(() {
+                                                                              userId.clear();
+                                                                              email.clear();
+                                                                              name.clear();
+                                                                              purpose.clear();
+                                                                              futureUsers = fetchUsers();
+                                                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                                                const SnackBar(
+                                                                                  content: Text('Successfully added queue'),
+                                                                                ),
+                                                                              );
+                                                                              Navigator.of(context).pop();
+                                                                            });
+                                                                          }else{
+                                                                            setState(() {
+                                                                              userId.clear();
+                                                                              email.clear();
+                                                                              name.clear();
+                                                                              purpose.clear();
+                                                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                                                const SnackBar(
+                                                                                  content: Text('Failed to add queue'),
+                                                                                ),
+                                                                              );
+                                                                              Navigator.of(context).pop();
+                                                                            });
+                                                                          }
+                                                                        }
+                                                                      },
+                                                                      style: ButtonStyle(
+                                                                        shape: MaterialStateProperty.all(
+                                                                          RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                            BorderRadius.circular(20.0),
+                                                                          ),
+                                                                        ),
+                                                                        foregroundColor:
+                                                                        MaterialStateProperty.all(
+                                                                            Colors.white),
+                                                                        backgroundColor:
+                                                                        MaterialStateProperty.all(
+                                                                            const Color(0xFF05046a)),
+                                                                        minimumSize:
+                                                                        MaterialStateProperty.all(
+                                                                            const Size(100.0,
+                                                                                48.0)),
+                                                                      ),
+                                                                      child: const Text(
+                                                                        'Submit',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                            18.0), // Adjust font size
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(width: 20.0),
+                                                                    // Add spacing between buttons
+                                                                    TextButton(
+                                                                      onPressed: () {
+                                                                        setState(() {
+                                                                          userId.clear();
+                                                                          email.clear();
+                                                                          name.clear();
+                                                                          purpose.clear();
+                                                                        });
+                                                                        Navigator.of(context).pop();
+                                                                      },
+                                                                      style: ButtonStyle(
+                                                                        shape: MaterialStateProperty.all(
+                                                                          RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                            BorderRadius.circular(20.0),
+                                                                          ),
+                                                                        ),
+                                                                        foregroundColor:
+                                                                        MaterialStateProperty.all(
+                                                                            Colors.white),
+                                                                        backgroundColor:
+                                                                        MaterialStateProperty.all(
+                                                                            const Color(0xFF05046a)),
+                                                                        minimumSize:
+                                                                        MaterialStateProperty.all(
+                                                                            const Size(100.0,
+                                                                                48.0)), // Adjust width
+                                                                      ),
+                                                                      child: const Text(
+                                                                        'Cancel',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                            18.0), // Adjust font size
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            ]),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              style: ButtonStyle(
+                                                shape: MaterialStateProperty.all(
+                                                  RoundedRectangleBorder(
+                                                    borderRadius:
+                                                    BorderRadius.circular(20.0),
+                                                  ),
+                                                ),
+                                                foregroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.white),
+                                                backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    const Color(0xFF05046a)),
+                                                minimumSize:
+                                                MaterialStateProperty.all(
+                                                    const Size(100.0,
+                                                        48.0)), // Adjust width
+                                              ),
+                                              child: const Text(
+                                                'Guest',
+                                                style: TextStyle(
+                                                    fontSize:
+                                                    18.0), // Adjust font size
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                          );
-                        },
-                      );
+                                          ],
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                            );
+                          },
+                        );
+                      }
                     },
                     child: Opacity(
                       opacity: 0.85,
@@ -347,7 +659,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               width: 50, // Replace with desired width
                               height: 50, // Replace with desired height
                               padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.blue,
                               ),
@@ -363,7 +675,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             const SizedBox(height: 8.0),
                             Text(
                               snapshot.data![index].name,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
                               ),
@@ -371,21 +683,21 @@ class _MyHomePageState extends State<MyHomePage> {
                             const SizedBox(height: 4.0),
                             Text(
                               snapshot.data![index].position,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.grey,
                               ),
                             ),
                             const SizedBox(height: 8.0),
                             Text(
-                              "${snapshot.data![index].status ?? "Not Available"}",
+                              "${snapshot.data![index].status??"Not Available"}",
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: color,
                               ),
                             ),
                             const SizedBox(height: 8.0),
                             Text(
                                 "Current Queue: ${snapshot.data![index].count??"0"}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.grey,
                                 )),
                           ],

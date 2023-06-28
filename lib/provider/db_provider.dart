@@ -1,10 +1,11 @@
 import 'dart:async';
+import 'package:mobilequemanagement_frontend/model/login_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'dart:io' as io;
 
-class dbProvicer {
+class DBProvider {
   static Database? _database;
 
   Future<Database?> get database async {
@@ -26,11 +27,15 @@ class dbProvicer {
 
   _createDatabase(Database database, int version) async {
     await database.execute(
-        "CREATE TABLE user(id INTEGER PRIMARY KEY , name TEXT NOT NULL, email TEXT NOT NULL, position TEXT NOT NULL, queueLimit INTEGER NOT NULL);");
+        "CREATE TABLE user(accessToken VARCHAR(255) NOT NULL, user_id VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, "
+            "email VARCHAR(255) NOT NULL, position VARCHAR(255) NOT NULL, queueLimit INT NOT NULL, "
+            " PRIMARY KEY (user_id));");
   }
 
-  // Database db = await openDatabase('my_database.db', version: 1, onCreate: (db, version) {
-  // // Create the table
-  // db.execute('CREATE TABLE my_table (id INTEGER PRIMARY KEY, name TEXT, age INTEGER, email TEXT)');
-  // });
+  Future<User>insertUser(User user) async {
+    var dbClient = await database;
+    await dbClient?.insert('user', user.toJson());
+    return user;
+  }
+
 }
