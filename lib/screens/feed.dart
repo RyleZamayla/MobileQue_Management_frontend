@@ -155,11 +155,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                           BorderRadius.circular(50.0),
                                                                         ),
                                                                         labelText: 'Student ID',
+                                                                        hintText: '202XXXXXXX',
                                                                         labelStyle:
                                                                         const TextStyle(color: Colors.black),
                                                                       ),
                                                                       validator: (value) {
-                                                                        return (value == '') ? 'Please enter your ID number' : null;
+                                                                        if (value == '' || value == null){
+                                                                          return 'Please enter your USTP ID number';
+                                                                        }else if (value.length != 10){
+                                                                          return 'Please enter a valid USTP ID number';
+                                                                        }else if (value.contains(RegExp(r'[\W_]'))) {
+                                                                          return 'Special characters are not allowed';
+                                                                        } else {
+                                                                          return null;
+                                                                        }
                                                                       },
                                                                     ),
                                                                     const SizedBox(height: 16.0),
@@ -182,11 +191,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                           borderRadius:
                                                                           BorderRadius.circular(50.0),
                                                                         ),
-                                                                        labelText: 'Student Name',
+                                                                        labelText: 'Student Full Name',
+                                                                        hintText: 'John Doe',
                                                                         labelStyle: const TextStyle(color: Colors.black),
                                                                       ),
                                                                       validator: (value) {
-                                                                        return (value == '') ? 'Please enter your name' : null;
+                                                                        const pattern = r'^[a-zA-Z\s]+$'; // Only alphabets and spaces are allowed
+                                                                        final regExp = RegExp(pattern);
+                                                                        if (value == '' || value == null) {
+                                                                          return 'Please enter your full name';
+                                                                        }else if (!regExp.hasMatch(value)) {
+                                                                          return 'Special characters or numbers are not allowed';
+                                                                        } else {
+                                                                          return null;
+                                                                        }
                                                                       },
                                                                     ),
                                                                     const SizedBox(height: 16.0),
@@ -430,10 +448,19 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                           BorderRadius.circular(50.0),
                                                                         ),
                                                                         labelText: 'Guest Name',
+                                                                        hintText: 'John Doe',
                                                                         labelStyle: const TextStyle(color: Colors.black),
                                                                       ),
                                                                       validator: (value) {
-                                                                        return (value == '') ? 'Please enter your name' : null;
+                                                                        const pattern = r'^[a-zA-Z\s]+$'; // Only alphabets and spaces are allowed
+                                                                        final regExp = RegExp(pattern);
+                                                                        if (value == '' || value == null) {
+                                                                          return 'Please enter your full name';
+                                                                        }else if (!regExp.hasMatch(value)) {
+                                                                          return 'Special characters or numbers are not allowed';
+                                                                        } else {
+                                                                          return null;
+                                                                        }
                                                                       },
                                                                     ),
                                                                     const SizedBox(height: 16.0),

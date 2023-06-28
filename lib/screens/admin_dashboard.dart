@@ -91,7 +91,6 @@ class _adminDashboardState extends State<adminDashboard> {
                             test = value!;
                           });
                           SharedPreferences prefs = await SharedPreferences.getInstance();
-                          print(value);
                           var response = await api.postAdminStatus('user/status', prefs.getString('token'), value);
                           if(response != 'Failed to update status'){
                             setState(() {
@@ -226,7 +225,13 @@ class _adminDashboardState extends State<adminDashboard> {
                                             const TextStyle(color: Colors.black),
                                           ),
                                           validator: (value) {
-                                            return (value == '') ? 'Please Queue Limit' : null;
+                                            if (value == '' || value == null){
+                                              return 'Please enter Queue Limit';
+                                            }else if (value.contains(RegExp(r'[\W_]'))) {
+                                              return 'Special characters are not allowed';
+                                            } else {
+                                              return null;
+                                            }
                                           },
                                         ),
                                       ],

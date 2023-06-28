@@ -172,58 +172,68 @@ class _currentQueueState extends State<currentQueue> {
                   ),
                   const SizedBox(width: 20.0),
                   TextButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Center(
-                              child: Text(
-                                'Notification Sent!',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                    onPressed: ()async{
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      var response = await api.postNotify('queue/notify', prefs.getString('token'), snapshot.data![index].email);
+                      if (response != 'Failed to send notification'){
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Center(
+                                child: Text(
+                                  'Notification Sent!',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ),
-                            ),
-                            actions: [
-                              Center(
-                                child: Container(
-                                  width: 120.0,
-                                  height: 48.0,
-                                  child: TextButton(
-                                    onPressed: () {
-                                      // closeAllDialogs(); // Close all dialogs
-                                      Navigator.pop(context);
-                                    },
-                                    style: ButtonStyle(
-                                      shape: MaterialStateProperty.all(
-                                        RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
+                              actions: [
+                                Center(
+                                  child: Container(
+                                    width: 120.0,
+                                    height: 48.0,
+                                    child: TextButton(
+                                      onPressed: () {
+                                        // closeAllDialogs(); // Close all dialogs
+                                        Navigator.of(context).pop();
+                                      },
+                                      style: ButtonStyle(
+                                        shape: MaterialStateProperty.all(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                            BorderRadius.circular(20.0),
+                                          ),
                                         ),
+                                        foregroundColor:
+                                        MaterialStateProperty.all(
+                                            Colors.white),
+                                        backgroundColor:
+                                        MaterialStateProperty.all(
+                                            const Color(0xFF05046a)),
                                       ),
-                                      foregroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.white),
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              const Color(0xFF05046a)),
-                                    ),
-                                    child: const Center(
-                                      child: Text(
-                                        'Okay',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
+                                      child: const Center(
+                                        child: Text(
+                                          'Okay',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                              ],
+                            );
+                          },
+                        );
+                      }else{
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Failed to send notification'),
+                          ),
+                        );
+                      }
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all(
@@ -403,59 +413,68 @@ class _currentQueueState extends State<currentQueue> {
                   ),
                   const SizedBox(width: 20.0),
                   TextButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Center(
-                              child: Text(
-                                'Notification Sent!',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                    onPressed: ()async{
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      var response = await api.postNotify('queue/notify', prefs.getString('token'), snapshot.data![index].email);
+                      if (response != 'Failed to send notification'){
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Center(
+                                child: Text(
+                                  'Notification Sent!',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ),
-                            ),
-                            actions: [
-                              Center(
-                                child: Container(
-                                  width: 120.0,
-                                  height: 48.0,
-                                  child: TextButton(
-                                    onPressed: () {
-                                      // closeAllDialogs(); // Close all dialogs
-                                      Navigator.pop(context);
-
-                                    },
-                                    style: ButtonStyle(
-                                      shape: MaterialStateProperty.all(
-                                        RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
+                              actions: [
+                                Center(
+                                  child: Container(
+                                    width: 120.0,
+                                    height: 48.0,
+                                    child: TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        // closeAllDialogs(); // Close all dialogs
+                                      },
+                                      style: ButtonStyle(
+                                        shape: MaterialStateProperty.all(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                            BorderRadius.circular(20.0),
+                                          ),
                                         ),
+                                        foregroundColor:
+                                        MaterialStateProperty.all(
+                                            Colors.white),
+                                        backgroundColor:
+                                        MaterialStateProperty.all(
+                                            const Color(0xFF05046a)),
                                       ),
-                                      foregroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.white),
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              const Color(0xFF05046a)),
-                                    ),
-                                    child: const Center(
-                                      child: Text(
-                                        'Okay',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
+                                      child: const Center(
+                                        child: Text(
+                                          'Okay',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                              ],
+                            );
+                          },
+                        );
+                      }else{
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Failed to send notification'),
+                          ),
+                        );
+                      }
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all(

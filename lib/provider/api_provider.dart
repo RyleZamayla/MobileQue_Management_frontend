@@ -202,6 +202,31 @@ class apiProvider{
     }
   }
 
+  postNotify(String endpoint, String? token, String? email)async{
+    var fullURL = baseURL + endpoint;
+
+    // Make the request using the async/await syntax
+    Map<String, dynamic> body = {'email':email};
+    try {
+      http.Response response = await http.post(
+        Uri.parse(fullURL),
+        headers: {'Authorization': 'Bearer $token'},
+        body: body,
+      );
+
+      // Check the status code
+      if (response.statusCode == 200) {
+        return convert.json.decode(response.body);
+      } else {
+        // An error occurred
+        return 'Failed to send notification';
+      }
+    } catch (e) {
+      // An error occurred
+      print(e);
+    }
+  }
+
   deleteQueue(String endpoint, String? token, String queueId)async{
     var fullURL = baseURL + endpoint;
 
