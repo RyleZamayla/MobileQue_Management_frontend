@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobilequemanagement_frontend/provider/api_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// import '../routes.dart';
+
 class currentQueue extends StatefulWidget {
   currentQueue({this.userId,Key? key}) : super(key: key);
   String? userId;
@@ -15,9 +17,9 @@ class _currentQueueState extends State<currentQueue> {
   bool isGuest = true;
   apiProvider api = apiProvider();
 
-  void closeAllDialogs() {
-    Navigator.of(context).popUntil((route) => route.settings.name == '/');
-  }
+  // void closeAllDialogs() {
+  //   Navigator.of(context).popUntil((route) => route.settings.name == Routes.currentQueue);
+  // }
 
   updateQueue(String queueId)async{
     // SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -47,11 +49,13 @@ class _currentQueueState extends State<currentQueue> {
                     ),
                   ),
                   SizedBox(width: 8),
-                  Text(
-                    '${snapshot.data![index].idNumber}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                  Expanded(
+                    child: Text(
+                      '${snapshot.data![index].idNumber}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ],
@@ -186,7 +190,8 @@ class _currentQueueState extends State<currentQueue> {
                                   height: 48.0,
                                   child: TextButton(
                                     onPressed: () {
-                                      closeAllDialogs(); // Close all dialogs
+                                      // closeAllDialogs(); // Close all dialogs
+                                      Navigator.pop(context);
                                     },
                                     style: ButtonStyle(
                                       shape: MaterialStateProperty.all(
@@ -249,6 +254,8 @@ class _currentQueueState extends State<currentQueue> {
       ),
     );
   }
+
+
 
   buildGuestInfo(AsyncSnapshot snapshot, int index) {
     return Center(
@@ -414,7 +421,9 @@ class _currentQueueState extends State<currentQueue> {
                                   height: 48.0,
                                   child: TextButton(
                                     onPressed: () {
-                                      closeAllDialogs(); // Close all dialogs
+                                      // closeAllDialogs(); // Close all dialogs
+                                      Navigator.pop(context);
+
                                     },
                                     style: ButtonStyle(
                                       shape: MaterialStateProperty.all(
