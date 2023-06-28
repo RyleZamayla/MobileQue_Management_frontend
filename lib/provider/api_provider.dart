@@ -92,35 +92,117 @@ class apiProvider{
     }
   }
 
-  putQueue(String endpoint, String? userId, String? status)async{
+  getDoneQueues(String endpoint, String? token)async{
+    var fullURL = baseURL + endpoint;
+
+    // Make the request using the async/await syntax
+    try {
+      http.Response response = await http.get(
+        Uri.parse(fullURL),
+        headers: {'Authorization': 'Bearer $token'},
+      );
+
+      List<QueuesModel> doneQueues;
+      doneQueues = (convert.json.decode(response.body) as List).map((i) =>
+          QueuesModel.fromJson(i)).toList();
+
+      // Check the status code
+      if (response.statusCode == 200) {
+        return doneQueues;
+      } else {
+        // An error occurred
+        return 'Error deleting queue';
+      }
+    } catch (e) {
+      // An error occurred
+      print(e);
+    }
+  }
+
+  putQueue(String endpoint, String? queueId)async{
     final body = {
-      'userId': userId,
-      'status': status??"Pending",
+      '_id': queueId,
+      'status': "Done",
     };
     final jsonBody = convert.jsonEncode(body);
     final uri = Uri.parse(baseURL+endpoint);
     final headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
     };
-    final response = await http.post(
+    final response = await http.put(
       uri,
       headers: headers,
       body: jsonBody,
     );
 
-    List<QueuesModel> queues;
-    queues = (convert.json.decode(response.body) as List).map((i) =>
-        QueuesModel.fromJson(i)).toList();
+    // List<QueuesModel> queues;
+    // queues = (convert.json.decode(response.body) as List).map((i) =>
+    //     QueuesModel.fromJson(i)).toList();
 
     if (response.statusCode == 200){
-      print("Successfully fetched json data");
-      return queues;
+      print("Successfully updated json data");
+      return 'Successfully updated queue';
     } else {
-      return 'Failed to load queues';
+      return 'Error updating queue';
     }
   }
 
-  deleteQueue(String endpoint, String? token,String queueId)async{
+  postQueueLimit(String endpoint, String? token, String? userId, String? queueLimit)async{
+    var fullURL = baseURL + endpoint;
+
+    // Make the request using the async/await syntax
+    Map<String, dynamic> body = {
+      'userId': userId,
+      'queueLimit':queueLimit
+    };
+    try {
+      http.Response response = await http.post(
+        Uri.parse(fullURL),
+        headers: {'Authorization': 'Bearer $token'},
+        body: body,
+      );
+
+      // Check the status code
+      if (response.statusCode == 200) {
+        return convert.json.decode(response.body);
+      } else {
+        // An error occurred
+        return 'Failed to update queue limit';
+      }
+    } catch (e) {
+      // An error occurred
+      print(e);
+    }
+  }
+
+  postAdminStatus(String endpoint, String? token, String? status)async{
+    var fullURL = baseURL + endpoint;
+
+    // Make the request using the async/await syntax
+    Map<String, String?> body = {'status': status.toString()};
+    try {
+      http.Response response = await http.post(
+        Uri.parse(fullURL),
+        headers: {'Authorization': 'Bearer $token'},
+        body: body,
+      );
+
+      // Check the status code
+      print(response.body);
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        return convert.json.decode(response.body);
+      } else {
+        // An error occurred
+        return 'Failed to update status';
+      }
+    } catch (e) {
+      // An error occurred
+      print(e);
+    }
+  }
+
+  deleteQueue(String endpoint, String? token, String queueId)async{
     var fullURL = baseURL + endpoint;
 
     // Make the request using the async/await syntax

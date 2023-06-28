@@ -20,7 +20,12 @@ class _adminDashboardState extends State<adminDashboard> {
   late Map<String, dynamic> admin;
   int _currentIndex = 0;
   apiProvider api = apiProvider();
-  late String? accessToken, name, email, position, queueLimit, userId,profilePic;
+  late String? accessToken, name, email, position, queueLimit, userId, profilePic, status;
+  var formKey = GlobalKey<FormState>();
+  TextEditingController queueNew = TextEditingController();
+  TextEditingController userID = TextEditingController();
+  String? stat;
+  String test = "Available";
 
   final List<Widget> _tabs = [currentQueue(), const queueHistory()];
 
@@ -40,8 +45,9 @@ class _adminDashboardState extends State<adminDashboard> {
     queueLimit = prefs.getString('queueLimit');
     userId = prefs.getString('userId');
     profilePic = prefs.getString('profilePic');
-    print("gawas build $name");
+    status = prefs.getString('status');
   }
+
 
   @override
   void initState(){
@@ -52,11 +58,79 @@ class _adminDashboardState extends State<adminDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    print(admin);
+    stat = admin['error'] != 'error' ? admin['user']['status'] : status;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF05046a),
         title: const Text("Admin Dashboard"),
+        actions: [
+          DropdownButton(
+            dropdownColor: const Color(0xFF05046a),
+            value: test,
+            items: [
+              DropdownMenuItem(
+                child: Text('Available',style: const TextStyle(color: Colors.white)),
+                value: 'Available',
+              ),
+              DropdownMenuItem(
+                child: Text('Not Available',style: const TextStyle(color: Colors.white)),
+                value: 'Not Available',
+              ),
+            ],
+            onChanged: (String? value) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Are you sure you want to change status?'),
+                    actions: [
+                      TextButton(
+                        child: Text('Yes'),
+                        onPressed: ()async{
+                          setState(() {
+                            test = value!;
+                          });
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          print(value);
+                          var response = await api.postAdminStatus('user/status', prefs.getString('token'), value);
+                          if(response != 'Failed to update status'){
+                            setState(() {
+                              admin['user']['status'] = response['status'];
+                              prefs.setString('status', response['status']);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Successfully updated status'),
+                                ),
+                              );
+                            });
+                          }else{
+                            setState(() {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Failed to update status'),
+                                ),
+                              );
+                            });
+                          }
+                          Navigator.pop(context);
+                        },
+                      ),
+                      TextButton(
+                        child: Text('No'),
+                        onPressed: () {
+                          setState(() {
+                            stat = stat;
+                          });
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
       drawer: Drawer(
         child: Container(
@@ -108,6 +182,164 @@ class _adminDashboardState extends State<adminDashboard> {
               ListTile(
                 tileColor: Colors.transparent,
                 // Set the tile color to transparent
+                leading: const Icon(Icons.change_circle, color: Colors.white),
+                title: const Text('Set Queue Limit', style: TextStyle(color: Colors.white)),
+                onTap: () {
+                  userID.text = admin ['error'] != 'error' ? admin['user']['_id'] : userId;
+                  Navigator.pop(context);
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context){
+                        return Center(
+                          child: SingleChildScrollView(
+                            reverse: true,
+                            child: AlertDialog(
+                                title: const Center(child: Text('Set Queue Limit')),
+                                content: Form(
+                                    key: formKey,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text("Current Queue Limit: ${admin ['error'] != 'error' ? admin['user']['queueLimit'] : queueLimit}"),
+                                        const SizedBox(height: 10),
+                                        TextFormField(
+                                          controller: queueNew,
+                                          keyboardType: TextInputType.number,
+                                          decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                  width: 3,
+                                                  color: Colors.yellowAccent),
+                                              borderRadius:
+                                              BorderRadius.circular(50.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              // Set focused border color
+                                              borderSide: const BorderSide(
+                                                  width: 3,
+                                                  color: Colors.yellowAccent),
+                                              borderRadius:
+                                              BorderRadius.circular(50.0),
+                                            ),
+                                            labelText: 'Queue Limit',
+                                            labelStyle:
+                                            const TextStyle(color: Colors.black),
+                                          ),
+                                          validator: (value) {
+                                            return (value == '') ? 'Please Queue Limit' : null;
+                                          },
+                                        ),
+                                      ],
+                                    )),
+                                actions: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        TextButton(
+                                          onPressed: ()async{
+                                            if(formKey.currentState!.validate()){
+                                              SharedPreferences prefs = await SharedPreferences.getInstance();
+                                              var response = await api.postQueueLimit('user/limit', prefs.getString('token'),admin ['error'] != 'error' ? admin['user']['_id'] : userId, queueNew.text);
+                                              if(response != "Failed to update queue limit"){
+                                                setState(() {
+                                                  userID.clear();
+                                                  queueNew.clear();
+                                                  admin['user']['queueLimit'] = response['queueLimit'];
+                                                  prefs.setString('queueLimit', response['queueLimit'].toString());
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                    const SnackBar(
+                                                      content: Text('Successfully updated queue limit'),
+                                                    ),
+                                                  );
+                                                  Navigator.of(context).pop();
+                                                });
+                                              }else{
+                                                setState(() {
+                                                  userID.clear();
+                                                  queueNew.clear();
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                    const SnackBar(
+                                                      content: Text('Failed to update queue limit'),
+                                                    ),
+                                                  );
+                                                });
+                                              }
+                                            }
+                                          },
+                                          style: ButtonStyle(
+                                            shape: MaterialStateProperty.all(
+                                              RoundedRectangleBorder(
+                                                borderRadius:
+                                                BorderRadius.circular(20.0),
+                                              ),
+                                            ),
+                                            foregroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.white),
+                                            backgroundColor:
+                                            MaterialStateProperty.all(
+                                                const Color(0xFF05046a)),
+                                            minimumSize:
+                                            MaterialStateProperty.all(
+                                                const Size(100.0,
+                                                    48.0)),
+                                          ),
+                                          child: const Text(
+                                            'Update',
+                                            style: TextStyle(
+                                                fontSize:
+                                                18.0), // Adjust font size
+                                          ),
+                                        ),
+                                        const SizedBox(width: 20.0),
+                                        // Add spacing between buttons
+                                        TextButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              userID.clear();
+                                              queueNew.clear();
+                                            });
+                                            Navigator.of(context).pop();
+                                          },
+                                          style: ButtonStyle(
+                                            shape: MaterialStateProperty.all(
+                                              RoundedRectangleBorder(
+                                                borderRadius:
+                                                BorderRadius.circular(20.0),
+                                              ),
+                                            ),
+                                            foregroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.white),
+                                            backgroundColor:
+                                            MaterialStateProperty.all(
+                                                const Color(0xFF05046a)),
+                                            minimumSize:
+                                            MaterialStateProperty.all(
+                                                const Size(100.0,
+                                                    48.0)), // Adjust width
+                                          ),
+                                          child: const Text(
+                                            'Cancel',
+                                            style: TextStyle(
+                                                fontSize:
+                                                18.0), // Adjust font size
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ]),
+                          ),
+                        );
+                      }
+                      );
+                },
+              ),
+              ListTile(
+                tileColor: Colors.transparent,
+                // Set the tile color to transparent
                 leading: const Icon(Icons.settings, color: Colors.white),
                 title: const Text('Settings', style: TextStyle(color: Colors.white)),
                 onTap: () {
@@ -130,6 +362,7 @@ class _adminDashboardState extends State<adminDashboard> {
                   prefs.remove('email');
                   prefs.remove('position');
                   prefs.remove('queueLimit');
+                  prefs.remove('status');
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (BuildContext ctx) => MyHomePage(title: "Dashboard",)));
                 },

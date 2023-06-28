@@ -3,7 +3,7 @@ import 'package:mobilequemanagement_frontend/provider/api_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class currentQueue extends StatefulWidget {
-  currentQueue({this.userId, Key? key}) : super(key: key);
+  currentQueue({this.userId,Key? key}) : super(key: key);
   String? userId;
 
   @override
@@ -19,6 +19,10 @@ class _currentQueueState extends State<currentQueue> {
     Navigator.of(context).popUntil((route) => route.settings.name == '/');
   }
 
+  updateQueue(String queueId)async{
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    return api.putQueue('queue/', queueId);
+  }
 
   buildStudentInfo(AsyncSnapshot snapshot, int index) {
     return Center(
@@ -127,7 +131,19 @@ class _currentQueueState extends State<currentQueue> {
                 children: [
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      var response = updateQueue(snapshot.data![index].id);
+                      if(response != "Error updating queue"){
+                        setState((){
+                          futureQueues = fetchID();
+                          Navigator.of(context).pop();
+                        });
+                      }else{
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Error updating queue'),
+                          ),
+                        );
+                      }
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all(
@@ -343,7 +359,19 @@ class _currentQueueState extends State<currentQueue> {
                 children: [
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      var response = updateQueue(snapshot.data![index].id);
+                      if(response != "Error updating queue"){
+                        setState((){
+                          futureQueues = fetchID();
+                          Navigator.of(context).pop();
+                        });
+                      }else{
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Error updating queue'),
+                          ),
+                        );
+                      }
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all(
@@ -450,11 +478,6 @@ class _currentQueueState extends State<currentQueue> {
     );
   }
 
-  deleteQueue(String queueId) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return api.deleteQueue('queue/delete', prefs.getString('token'), queueId);
-  }
-
   fetchID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return api.postQueues("queue/pending", prefs.getString('userId'));
@@ -520,6 +543,7 @@ class _currentQueueState extends State<currentQueue> {
                     );
                   },
                   subtitle: Text(snapshot.data![index].name),
+                  trailing: Text("Status: ${snapshot.data![index].status}",style: const TextStyle(color: Colors.red),),
                 ),
               );
             },
@@ -531,3 +555,5 @@ class _currentQueueState extends State<currentQueue> {
     );
   }
 }
+
+

@@ -160,6 +160,7 @@ class _LoginState extends State<Login> {
                           prefs.setString('token', '${response['accessToken']}');
                           prefs.setString('name', '${response['user']['name']}');
                           prefs.setString('email', '${response['user']['email']}');
+                          prefs.setString('status', '${response['user']['status']}');
                           prefs.setString('position', '${response['user']['position']}');
                           prefs.setString('queueLimit', response['user']['queueLimit'].toString());
                           prefs.setString('profilePic', '${response['user']['profilePic']}');
