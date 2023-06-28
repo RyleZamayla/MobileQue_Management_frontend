@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobilequemanagement_frontend/provider/api_provider.dart';
 import 'package:mobilequemanagement_frontend/screens/current_queue.dart';
 import 'package:mobilequemanagement_frontend/screens/feed.dart';
 import 'package:mobilequemanagement_frontend/screens/queue_history.dart';
@@ -18,6 +19,8 @@ class adminDashboard extends StatefulWidget {
 class _adminDashboardState extends State<adminDashboard> {
   late Map<String, dynamic> admin;
   int _currentIndex = 0;
+  apiProvider api = apiProvider();
+  late String? accessToken, name, email, position, queueLimit, userId,profilePic;
 
   final List<Widget> _tabs = [currentQueue(), const queueHistory()];
 
@@ -28,14 +31,28 @@ class _adminDashboardState extends State<adminDashboard> {
     });
   }
 
+  fetchID()async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    accessToken = prefs.getString('token');
+    name = prefs.getString('name');
+    email = prefs.getString('email');
+    position = prefs.getString('position');
+    queueLimit = prefs.getString('queueLimit');
+    userId = prefs.getString('userId');
+    profilePic = prefs.getString('profilePic');
+    print("gawas build $name");
+  }
+
   @override
-  void initState() {
-    admin = widget.futureAdmin!;
+  void initState(){
+    admin = widget.futureAdmin ?? {'error':'error'};
+    fetchID();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(admin);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF05046a),
@@ -52,15 +69,20 @@ class _adminDashboardState extends State<adminDashboard> {
                   color: Color(0xFF05046a), // Set the color of the header section
                 ),
                 accountName: Text(
-                  "${admin['user']['name']}",
+                  "${admin['error'] != 'error' ? admin['user']['name'] : name}",
                   style: const TextStyle(color: Colors.white),
                 ),
                 accountEmail: Text(
-                  "${admin['user']['email']}",
+                  "${admin ['error'] != 'error' ? admin['user']['email'] : email}",
                   style: const TextStyle(color: Colors.white),
                 ),
-                currentAccountPicture: const CircleAvatar(
-                  backgroundImage: AssetImage("assets/background_student.jpg"),
+                currentAccountPicture: ClipRRect(
+                  borderRadius: BorderRadius.circular(25), // Half of the width or height for a perfect circle
+                  child: Image(
+                    image: NetworkImage(admin ['error'] != 'error' ? admin['user']['profilePic'] : profilePic??'https://scontent.fdvo5-1.fna.fbcdn.net/v/t39.30808-6/324429893_692617042404789_8825582010059206302_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeEuGGRS4j1TRnpWy-X7IciFiSnhuT21QT-JKeG5PbVBP8vei6WwmkTDRRj7Yshbp_oOgXKi9I5yuhVxBQGTA9ct&_nc_ohc=cR43Oe7orLkAX8oqv9e&_nc_ht=scontent.fdvo5-1.fna&oh=00_AfBVoA5lCXiUjLB0d8bKiG7RALtAeq036ggnmpmJJW1XTw&oe=649E83B4'), // Replace with your image URL
+                    width: 40, // Replace with desired image width
+                    height: 40, // Replace with desired image height
+                  ),
                 ),
               ),
               ListTile(
@@ -104,6 +126,10 @@ class _adminDashboardState extends State<adminDashboard> {
                   SharedPreferences prefs = await SharedPreferences.getInstance();
                   prefs.remove('token');
                   prefs.remove('userId');
+                  prefs.remove('name');
+                  prefs.remove('email');
+                  prefs.remove('position');
+                  prefs.remove('queueLimit');
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (BuildContext ctx) => MyHomePage(title: "Dashboard",)));
                 },

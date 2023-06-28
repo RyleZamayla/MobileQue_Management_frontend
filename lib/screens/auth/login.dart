@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobilequemanagement_frontend/provider/db_provider.dart';
 import 'package:mobilequemanagement_frontend/screens/admin_dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../provider/api_provider.dart';
@@ -11,6 +12,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  DBProvider? dbProvider;
   apiProvider api = apiProvider();
   String? errorMessage = '';
   bool _passwordVisible = false;
@@ -23,6 +25,12 @@ class _LoginState extends State<Login> {
       errorMessage == '' ? '' : "$errorMessage",
       style: const TextStyle(color: Colors.red),
     );
+  }
+
+  @override
+  void initState() {
+    dbProvider = DBProvider();
+    super.initState();
   }
 
   @override
@@ -150,7 +158,11 @@ class _LoginState extends State<Login> {
                         if (response != 'Failed to login') {
                           prefs.setString('userId', '${response['user']['_id']}');
                           prefs.setString('token', '${response['accessToken']}');
-                          print(response);
+                          prefs.setString('name', '${response['user']['name']}');
+                          prefs.setString('email', '${response['user']['email']}');
+                          prefs.setString('position', '${response['user']['position']}');
+                          prefs.setString('queueLimit', response['user']['queueLimit'].toString());
+                          prefs.setString('profilePic', '${response['user']['profilePic']}');
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
