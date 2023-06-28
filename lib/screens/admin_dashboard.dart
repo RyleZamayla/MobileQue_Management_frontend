@@ -105,8 +105,14 @@ class _adminDashboardState extends State<adminDashboard> {
                   prefs.remove('myMap');
                   prefs.remove('userId');
                   prefs.remove('accessToken');
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (BuildContext ctx) => MyHomePage(title: "Dashboard",)));
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                      const MyHomePage(title: 'Dashboard'),
+                    ),
+                        (Route<dynamic> route) => false,
+                  );
                 },
               ),
             ],
