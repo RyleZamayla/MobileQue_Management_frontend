@@ -24,7 +24,7 @@ void main() async{
     debugShowCheckedModeBanner: false,
     routes: {
 
-      Routes.currentQueue: (context) => currentQueue(),
+      Routes.currentQueue: (context) => const currentQueue(),
       Routes.adminDashboard: (context) => const adminDashboard(),
       Routes.queueHistory: (context) => const queueHistory(),
       Routes.settings: (context) => const SettingsPage(),

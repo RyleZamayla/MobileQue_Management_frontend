@@ -40,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF05046a),
+        leading: Image.asset('assets/logo.jpg'),
         title: Text(widget.title),
         actions: [
           IconButton(
