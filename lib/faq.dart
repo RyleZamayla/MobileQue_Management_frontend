@@ -33,7 +33,7 @@ class FAQPage extends StatelessWidget {
               FAQItem(
                 question: 'Q: Who are the leaders of this school project?',
                 answer:
-                'A: The leaders of this school project are Adrian Auguis, John Ray Cañete, Niel Opeña and Mark Gaje. They provide guidance and oversee the progress of the project, ensuring that it stays on track and meets the objectives.',
+                'A: The leaders of this school project are Adrian Auguis for the Mobile Development, John Ray Cañete for the Web Development, Niel Opeña for the IOT, and Mark Gaje for the backend. They provide guidance and oversee the progress of the project, ensuring that it stays on track and meets the objectives.',
               ),
              // Add more FAQItems as needed
             ],

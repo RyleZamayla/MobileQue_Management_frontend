@@ -21,12 +21,6 @@ class _SettingsPageState extends State<SettingsPage> {
       builder: (BuildContext context) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            brightness: Brightness.light,
-          ),
-          darkTheme: ThemeData(
-            brightness: Brightness.dark,
-          ),
           builder: (BuildContext context, Widget? child) {
             return Scaffold(
               appBar: AppBar(
@@ -40,21 +34,10 @@ class _SettingsPageState extends State<SettingsPage> {
                     title: 'General',
                     tiles: [
                       SettingsTile(
-                        title: 'Language',
-                        subtitle: 'English',
-                        leading: const Icon(Icons.language),
-                        onPressed: (BuildContext context) {},
-                      ),
-                      SettingsTile.switchTile(
-                        title: 'Use System Theme',
-                        leading: const Icon(Icons.phone_android),
-                        switchValue: isSwitched,
-                        onToggle: (value) {
-                          setState(() {
-                            isSwitched = value;
-                          });
-                        },
-                      ),
+                          title: 'Language',
+                          subtitle: 'English',
+                          leading: const Icon(Icons.language),
+                          trailing: null),
                     ],
                   ),
                   SettingsSection(

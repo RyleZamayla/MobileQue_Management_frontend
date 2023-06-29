@@ -27,6 +27,9 @@ class _adminDashboardState extends State<adminDashboard> {
   String? stat;
   String test = "Available";
 
+  // Define a list of titles for each tab
+  final List<String> _tabTitles = ['Current Queue', 'Queue History'];
+
   final List<Widget> _tabs = [currentQueue(), const queueHistory()];
 
   void onTabTapped(int index) {
@@ -62,7 +65,7 @@ class _adminDashboardState extends State<adminDashboard> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF05046a),
-        title: const Text("Admin Dashboard"),
+        title: Text(_tabTitles[_currentIndex]), // Set the app bar title based on the selected tab
         actions: [
           DropdownButton(
             dropdownColor: const Color(0xFF05046a),
@@ -368,8 +371,11 @@ class _adminDashboardState extends State<adminDashboard> {
                   prefs.remove('position');
                   prefs.remove('queueLimit');
                   prefs.remove('status');
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (BuildContext ctx) => MyHomePage(title: "Dashboard",)));
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/',
+                        (route) => false,
+                  );
                 },
               ),
             ],

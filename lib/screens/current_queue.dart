@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobilequemanagement_frontend/provider/api_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// import '../routes.dart';
+import '../routes.dart';
 
 class currentQueue extends StatefulWidget {
   currentQueue({this.userId,Key? key}) : super(key: key);
@@ -16,10 +16,6 @@ class _currentQueueState extends State<currentQueue> {
   late Future<dynamic> futureQueues;
   bool isGuest = true;
   apiProvider api = apiProvider();
-
-  // void closeAllDialogs() {
-  //   Navigator.of(context).popUntil((route) => route.settings.name == Routes.currentQueue);
-  // }
 
   updateQueue(String queueId)async{
     // SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -172,13 +168,17 @@ class _currentQueueState extends State<currentQueue> {
                   ),
                   const SizedBox(width: 20.0),
                   TextButton(
-                    onPressed: ()async{
+                    onPressed: () async {
                       SharedPreferences prefs = await SharedPreferences.getInstance();
-                      var response = await api.postNotify('queue/notify', prefs.getString('token'), snapshot.data![index].email);
-                      if (response != 'Failed to send notification'){
+                      var response = await api.postNotify(
+                          'queue/notify', prefs.getString('token'), snapshot.data![index].email);
+                      if (response != 'Failed to send notification') {
+                        Navigator.of(context).pop(); // Close the previous AlertDialog
+
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
+                            // Show the "Notification Sent!" AlertDialog
                             return AlertDialog(
                               title: const Center(
                                 child: Text(
@@ -186,48 +186,15 @@ class _currentQueueState extends State<currentQueue> {
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              actions: [
-                                Center(
-                                  child: Container(
-                                    width: 120.0,
-                                    height: 48.0,
-                                    child: TextButton(
-                                      onPressed: () {
-                                        // closeAllDialogs(); // Close all dialogs
-                                        Navigator.of(context).pop();
-                                      },
-                                      style: ButtonStyle(
-                                        shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(20.0),
-                                          ),
-                                        ),
-                                        foregroundColor:
-                                        MaterialStateProperty.all(
-                                            Colors.white),
-                                        backgroundColor:
-                                        MaterialStateProperty.all(
-                                            const Color(0xFF05046a)),
-                                      ),
-                                      child: const Center(
-                                        child: Text(
-                                          'Okay',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
                             );
                           },
                         );
-                      }else{
+
+                        // Delay for a few seconds and then close the AlertDialog
+                        await Future.delayed(const Duration(seconds: 3)); // Adjust the duration as needed
+
+                        Navigator.of(context).pop(); // Close the current AlertDialog
+                      } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Failed to send notification'),
@@ -242,10 +209,8 @@ class _currentQueueState extends State<currentQueue> {
                         ),
                       ),
                       foregroundColor: MaterialStateProperty.all(Colors.white),
-                      backgroundColor:
-                          MaterialStateProperty.all(const Color(0xFF05046a)),
-                      minimumSize:
-                          MaterialStateProperty.all(const Size(120.0, 48.0)),
+                      backgroundColor: MaterialStateProperty.all(const Color(0xFF05046a)),
+                      minimumSize: MaterialStateProperty.all(const Size(120.0, 48.0)),
                     ),
                     child: const Text(
                       'Notify',
@@ -256,6 +221,7 @@ class _currentQueueState extends State<currentQueue> {
                       ),
                     ),
                   ),
+
                 ],
               ),
             ),
@@ -358,7 +324,7 @@ class _currentQueueState extends State<currentQueue> {
                   SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      '${snapshot.data![index].status}',
+                      '${snapshot.data![index].status ?? "Status Unknown"}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -413,13 +379,17 @@ class _currentQueueState extends State<currentQueue> {
                   ),
                   const SizedBox(width: 20.0),
                   TextButton(
-                    onPressed: ()async{
+                    onPressed: () async {
                       SharedPreferences prefs = await SharedPreferences.getInstance();
-                      var response = await api.postNotify('queue/notify', prefs.getString('token'), snapshot.data![index].email);
-                      if (response != 'Failed to send notification'){
+                      var response = await api.postNotify(
+                          'queue/notify', prefs.getString('token'), snapshot.data![index].email);
+                      if (response != 'Failed to send notification') {
+                        Navigator.of(context).pop(); // Close the previous AlertDialog
+
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
+                            // Show the "Notification Sent!" AlertDialog
                             return AlertDialog(
                               title: const Center(
                                 child: Text(
@@ -427,48 +397,15 @@ class _currentQueueState extends State<currentQueue> {
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              actions: [
-                                Center(
-                                  child: Container(
-                                    width: 120.0,
-                                    height: 48.0,
-                                    child: TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                        // closeAllDialogs(); // Close all dialogs
-                                      },
-                                      style: ButtonStyle(
-                                        shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(20.0),
-                                          ),
-                                        ),
-                                        foregroundColor:
-                                        MaterialStateProperty.all(
-                                            Colors.white),
-                                        backgroundColor:
-                                        MaterialStateProperty.all(
-                                            const Color(0xFF05046a)),
-                                      ),
-                                      child: const Center(
-                                        child: Text(
-                                          'Okay',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
                             );
                           },
                         );
-                      }else{
+
+                        // Delay for a few seconds and then close the AlertDialog
+                        await Future.delayed(const Duration(seconds: 3)); // Adjust the duration as needed
+
+                        Navigator.of(context).pop(); // Close the current AlertDialog
+                      } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Failed to send notification'),
@@ -483,10 +420,8 @@ class _currentQueueState extends State<currentQueue> {
                         ),
                       ),
                       foregroundColor: MaterialStateProperty.all(Colors.white),
-                      backgroundColor:
-                          MaterialStateProperty.all(const Color(0xFF05046a)),
-                      minimumSize:
-                          MaterialStateProperty.all(const Size(120.0, 48.0)),
+                      backgroundColor: MaterialStateProperty.all(const Color(0xFF05046a)),
+                      minimumSize: MaterialStateProperty.all(const Size(120.0, 48.0)),
                     ),
                     child: const Text(
                       'Notify',
@@ -571,7 +506,7 @@ class _currentQueueState extends State<currentQueue> {
                     );
                   },
                   subtitle: Text(snapshot.data![index].name),
-                  trailing: Text("Status: ${snapshot.data![index].status}",style: const TextStyle(color: Colors.red),),
+                  trailing: Text("Status: ${snapshot.data![index].status ?? "Status Unknown"}",style: const TextStyle(color: Colors.red),),
                 ),
               );
             },
