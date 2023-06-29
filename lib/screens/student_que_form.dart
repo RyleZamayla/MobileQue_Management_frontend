@@ -71,7 +71,7 @@ class _QueFormState extends State<QueForm> {
                 controller: _studentNameController,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(
-                      Icons.person_2_outlined,
+                      Icons.person_outlined,
                       color: Color(0xFF05046a)),
                   labelText: 'Student Name',
                   labelStyle: const TextStyle(color: Color(0xFF05046a)),
@@ -155,16 +155,17 @@ class _QueFormState extends State<QueForm> {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            String studentNumber = _studentNumberController.text;
-                            String studentName = _studentNameController.text;
-                            String studentEmail = _studentEmailController.text;
-                            String purpose = _purposeController.text;
+                            // String studentNumber = _studentNumberController.text;
+                            // String studentName = _studentNameController.text;
+                            // String studentEmail = _studentEmailController.text;
+                            // String purpose = _purposeController.text;
 
                             _studentNumberController.clear();
                             _studentNameController.clear();
                             _studentEmailController.clear();
                             _purposeController.clear();
                           }
+
                         },
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(const Color(0xFF05046a)),
