@@ -48,7 +48,12 @@ class _adminDashboardState extends State<adminDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+          // Disable the back button press
+          return false;
+        },
+    child: Scaffold(
       body: FutureBuilder(
         future: admin,
         builder: (context, snapshot) {
@@ -377,6 +382,7 @@ class _adminDashboardState extends State<adminDashboard> {
           }
         },
       ),
+    ),
     );
   }
 }
