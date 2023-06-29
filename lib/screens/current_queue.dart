@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobilequemanagement_frontend/provider/api_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../routes.dart';
-
 class currentQueue extends StatefulWidget {
-  currentQueue({this.userId,Key? key}) : super(key: key);
-  String? userId;
+  const currentQueue({Key? key}) : super(key: key);
 
   @override
   State<currentQueue> createState() => _currentQueueState();
@@ -37,18 +34,18 @@ class _currentQueueState extends State<currentQueue> {
             children: [
               Row(
                 children: [
-                  Text(
+                  const Text(
                     'Student Number: ',
                     style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${snapshot.data![index].idNumber}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -59,18 +56,18 @@ class _currentQueueState extends State<currentQueue> {
               const SizedBox(height: 16.0),
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "Student Name:",
                     style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${snapshot.data![index].name}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -81,18 +78,18 @@ class _currentQueueState extends State<currentQueue> {
               const SizedBox(height: 16.0),
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "Student Email:",
                     style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${snapshot.data![index].email}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -103,18 +100,18 @@ class _currentQueueState extends State<currentQueue> {
               const SizedBox(height: 16.0),
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "Purpose:",
                     style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${snapshot.data![index].purpose}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -179,8 +176,8 @@ class _currentQueueState extends State<currentQueue> {
                           context: context,
                           builder: (BuildContext context) {
                             // Show the "Notification Sent!" AlertDialog
-                            return AlertDialog(
-                              title: const Center(
+                            return const AlertDialog(
+                              title: Center(
                                 child: Text(
                                   'Notification Sent!',
                                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -248,18 +245,18 @@ class _currentQueueState extends State<currentQueue> {
             children: [
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "Guest Name:",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${snapshot.data![index].name}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -270,18 +267,18 @@ class _currentQueueState extends State<currentQueue> {
               const SizedBox(height: 16.0),
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "Guest Email:",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${snapshot.data![index].email}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -292,18 +289,18 @@ class _currentQueueState extends State<currentQueue> {
               const SizedBox(height: 16.0),
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "Purpose:",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${snapshot.data![index].purpose}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -314,18 +311,18 @@ class _currentQueueState extends State<currentQueue> {
               const SizedBox(height: 16.0),
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "Status:",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${snapshot.data![index].status ?? "Status Unknown"}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -390,8 +387,8 @@ class _currentQueueState extends State<currentQueue> {
                           context: context,
                           builder: (BuildContext context) {
                             // Show the "Notification Sent!" AlertDialog
-                            return AlertDialog(
-                              title: const Center(
+                            return const AlertDialog(
+                              title: Center(
                                 child: Text(
                                   'Notification Sent!',
                                   style: TextStyle(fontWeight: FontWeight.bold),

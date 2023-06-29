@@ -20,12 +20,12 @@ void main() async{
       visualDensity: VisualDensity.adaptivePlatformDensity,
       colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.amber),
     ),
-    home: userId == null ? const MyHomePage(title: "Dashboard"): adminDashboard(),
+    home: userId == null ? const MyHomePage(title: "Dashboard"): const adminDashboard(),
     debugShowCheckedModeBanner: false,
     routes: {
 
       Routes.currentQueue: (context) => currentQueue(),
-      Routes.adminDashboard: (context) => adminDashboard(),
+      Routes.adminDashboard: (context) => const adminDashboard(),
       Routes.queueHistory: (context) => const queueHistory(),
       Routes.settings: (context) => const SettingsPage(),
 
