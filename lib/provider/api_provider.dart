@@ -18,7 +18,7 @@ class apiProvider{
       body: credentials,
     );
 
-
+    print(response.statusCode);
     if (response.statusCode == 200){
       print("Successfully logged in");
       return convert.json.decode(response.body);
@@ -81,7 +81,8 @@ class apiProvider{
     );
 
 
-    if (response.statusCode == 200){
+
+    if (response.statusCode >= 200 && response.statusCode < 300){
       print("Successfully added queue");
       return convert.json.decode(response.body);
     } else {

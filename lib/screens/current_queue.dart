@@ -399,7 +399,7 @@ class _currentQueueState extends State<currentQueue> {
                         );
 
                         // Delay for a few seconds and then close the AlertDialog
-                        await Future.delayed(const Duration(seconds: 3)); // Adjust the duration as needed
+                        await Future.delayed(const Duration(seconds: 1)); // Adjust the duration as needed
 
                         Navigator.of(context).pop(); // Close the current AlertDialog
                       } else {
