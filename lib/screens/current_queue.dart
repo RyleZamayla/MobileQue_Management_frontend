@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mobilequemanagement_frontend/provider/api_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +19,15 @@ class _currentQueueState extends State<currentQueue> {
   updateQueue(String queueId)async{
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     return api.putQueue('queue/', queueId);
+  }
+
+  fetchQueues()async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      setState(() {
+        futureQueues = api.postQueues("queue/pending", prefs.getString('userId'));
+      });
+    });
   }
 
   buildStudentInfo(AsyncSnapshot snapshot, int index) {
@@ -131,7 +142,7 @@ class _currentQueueState extends State<currentQueue> {
                       var response = updateQueue(snapshot.data![index].id);
                       if(response != "Error updating queue"){
                         setState((){
-                          futureQueues = fetchID();
+                          futureQueues = fetchQueues();
                           Navigator.of(context).pop();
                         });
                       }else{
@@ -227,7 +238,6 @@ class _currentQueueState extends State<currentQueue> {
       ),
     );
   }
-
 
 
   buildGuestInfo(AsyncSnapshot snapshot, int index) {
@@ -342,7 +352,7 @@ class _currentQueueState extends State<currentQueue> {
                       var response = updateQueue(snapshot.data![index].id);
                       if(response != "Error updating queue"){
                         setState((){
-                          futureQueues = fetchID();
+                          futureQueues = fetchQueues();
                           Navigator.of(context).pop();
                         });
                       }else{
@@ -438,14 +448,10 @@ class _currentQueueState extends State<currentQueue> {
     );
   }
 
-  fetchID() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return api.postQueues("queue/pending", prefs.getString('userId'));
-  }
 
   @override
   void initState() {
-    futureQueues = fetchID();
+    futureQueues = fetchQueues();
     super.initState();
   }
 

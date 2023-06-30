@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mobilequemanagement_frontend/provider/api_provider.dart';
@@ -14,9 +16,14 @@ class _queueHistoryState extends State<queueHistory> {
   apiProvider api = apiProvider();
   bool isGuest = true;
 
-  fetchID() async {
+
+  fetchDoneQueues()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return api.getDoneQueues("queue/done", prefs.getString('token'));
+    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      setState(() {
+        doneQueues = api.getDoneQueues("queue/done", prefs.getString('token'));
+      });
+    });
   }
 
   deleteQueue(String queueId) async {
@@ -111,7 +118,7 @@ class _queueHistoryState extends State<queueHistory> {
                   var response = deleteQueue(snapshot.data![index].id);
                   if (response != "Error deleting queue") {
                     setState(() {
-                      doneQueues = fetchID();
+                      doneQueues = fetchDoneQueues();
                       Navigator.of(context).pop();
                     });
                   } else {
@@ -258,7 +265,7 @@ class _queueHistoryState extends State<queueHistory> {
                   var response = deleteQueue(snapshot.data![index].id);
                   if (response != "Error deleting queue") {
                     setState(() {
-                      doneQueues = fetchID();
+                      doneQueues = fetchDoneQueues();
                       Navigator.of(context).pop();
                     });
                   } else {
@@ -297,7 +304,7 @@ class _queueHistoryState extends State<queueHistory> {
 
   @override
   void initState() {
-    doneQueues = fetchID();
+    doneQueues = fetchDoneQueues();
     super.initState();
   }
 

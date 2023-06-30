@@ -18,7 +18,6 @@ class apiProvider{
       body: credentials,
     );
 
-    print(response.statusCode);
     if (response.statusCode == 200){
       print("Successfully logged in");
       return convert.json.decode(response.body);
@@ -27,6 +26,29 @@ class apiProvider{
     }
   }
 
+  postLogout(String endpoint, String? token)async{
+    var fullURL = baseURL + endpoint;
+
+    // Make the request using the async/await syntax
+    try {
+      http.Response response = await http.post(
+        Uri.parse(fullURL),
+        headers: {'Authorization': 'Bearer $token'},
+      );
+
+      // Check the status code
+      if (response.statusCode == 200) {
+        // The resource was deleted successfully
+        return 'Logout successful';
+      } else {
+        // An error occurred
+        return 'Error logging out';
+      }
+    } catch (e) {
+      // An error occurred
+      print(e);
+    }
+  }
 
 
   getUsers(String endpoint)async{
@@ -39,12 +61,12 @@ class apiProvider{
         UserModel.fromJson(i)).toList();
 
     if (response.statusCode == 200){
-      print("Successfully fetched users");
       return myModels;
     } else {
       throw Exception('Failed to load users');
     }
   }
+
 
   getAdminUser(String endpoint, String? userId)async{
     var fullURL = baseURL + endpoint;
@@ -110,7 +132,6 @@ class apiProvider{
         QueuesModel.fromJson(i)).toList();
 
     if (response.statusCode == 200){
-      print("Successfully fetched pending queues");
       return queues;
     } else {
       return 'Failed to load queues';
