@@ -18,7 +18,7 @@ class apiProvider{
       body: credentials,
     );
 
-
+    print(response.statusCode);
     if (response.statusCode == 200){
       print("Successfully logged in");
       return convert.json.decode(response.body);
@@ -39,8 +39,32 @@ class apiProvider{
         UserModel.fromJson(i)).toList();
 
     if (response.statusCode == 200){
-      print("Successfully fetched json data");
+      print("Successfully fetched users");
       return myModels;
+    } else {
+      throw Exception('Failed to load users');
+    }
+  }
+
+  getAdminUser(String endpoint, String? userId)async{
+    var fullURL = baseURL + endpoint;
+    Response response = await http.get(Uri.parse(fullURL));
+
+    //converting json data to list
+    List<UserModel> myModels;
+    myModels = (convert.json.decode(response.body) as List).map((i) =>
+        UserModel.fromJson(i)).toList();
+
+
+    if (response.statusCode == 200){
+      for (int i = 0; i < myModels.length; i++){
+        if (myModels[i].id != userId){
+          continue;
+        }{
+          print("Successfully fetched admin user");
+          return myModels[i];
+        }
+      }
     } else {
       throw Exception('Failed to load users');
     }
@@ -57,7 +81,8 @@ class apiProvider{
     );
 
 
-    if (response.statusCode == 200){
+
+    if (response.statusCode >= 200 && response.statusCode < 300){
       print("Successfully added queue");
       return convert.json.decode(response.body);
     } else {
@@ -85,7 +110,7 @@ class apiProvider{
         QueuesModel.fromJson(i)).toList();
 
     if (response.statusCode == 200){
-      print("Successfully fetched json data");
+      print("Successfully fetched pending queues");
       return queues;
     } else {
       return 'Failed to load queues';
@@ -140,7 +165,7 @@ class apiProvider{
     //     QueuesModel.fromJson(i)).toList();
 
     if (response.statusCode == 200){
-      print("Successfully updated json data");
+      print("Successfully updated queue status");
       return 'Successfully updated queue';
     } else {
       return 'Error updating queue';
@@ -188,8 +213,6 @@ class apiProvider{
       );
 
       // Check the status code
-      print(response.body);
-      print(response.statusCode);
       if (response.statusCode == 200) {
         return convert.json.decode(response.body);
       } else {

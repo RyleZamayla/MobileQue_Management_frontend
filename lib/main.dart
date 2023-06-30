@@ -3,10 +3,10 @@ import 'package:mobilequemanagement_frontend/screens/admin_dashboard.dart';
 import 'package:mobilequemanagement_frontend/screens/feed.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// import 'routes.dart';
-// import 'screens/current_queue.dart';
-// import 'screens/materials/settings.dart';
-// import 'screens/queue_history.dart';
+import 'routes.dart';
+import 'screens/current_queue.dart';
+import 'screens/materials/settings.dart';
+import 'screens/queue_history.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,15 +20,16 @@ void main() async{
       visualDensity: VisualDensity.adaptivePlatformDensity,
       colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.amber),
     ),
-    home: userId == null ? const MyHomePage(title: "Dashboard"): adminDashboard(),
+    home: userId == null ? const MyHomePage(title: "Dashboard"): const adminDashboard(),
     debugShowCheckedModeBanner: false,
-    // routes: {
-    //   Routes.currentQueue: (context) => currentQueue(),
-    //   Routes.adminDashboard: (context) => adminDashboard(),
-    //   Routes.queueHistory: (context) => const queueHistory(),
-    //   Routes.settings: (context) => const SettingsPage(),
-    //
-    // },
+    routes: {
+
+      Routes.currentQueue: (context) => const currentQueue(),
+      Routes.adminDashboard: (context) => const adminDashboard(),
+      Routes.queueHistory: (context) => const queueHistory(),
+      Routes.settings: (context) => const SettingsPage(),
+
+    },
   ),
   );
 }

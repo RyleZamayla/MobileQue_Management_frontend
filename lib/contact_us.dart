@@ -38,7 +38,7 @@ class ContactUs extends StatelessWidget {
             ContactItem(
               icon: Icons.phone,
               title: 'Phone',
-              subtitle: '+1 (123) 456-7890',
+              subtitle: '+(639) 4561-78901',
               onTap: () {
                 // Handle phone contact
               },
@@ -46,7 +46,7 @@ class ContactUs extends StatelessWidget {
             ContactItem(
               icon: Icons.location_on,
               title: 'Address',
-              subtitle: '123 Main St, City, Country',
+              subtitle: 'Claro M. Recto Avenue, Lapasan 9000 Cagayan de Oro City, Philippines',
               onTap: () {
                 // Handle address contact
               },

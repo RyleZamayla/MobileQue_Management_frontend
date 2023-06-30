@@ -40,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF05046a),
+        leading: Image.asset('assets/logo.jpg'),
         title: Text(widget.title),
         actions: [
           IconButton(
@@ -96,10 +97,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   return GestureDetector(
                     onTap: () {
                       userId.text = snapshot.data![index].id;
-                      if(snapshot.data![index].status == null || snapshot.data![index].status == "Not Available"){
+                      if(snapshot.data![index].status == null || snapshot.data![index].status == "Not Available") {
                         Fluttertoast.showToast(
                           msg: '${snapshot.data![index].name} is Not Available',
                           textColor: color,
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                        );
+                      }else if (snapshot.data![index].count >= snapshot.data![index].queueLimit){
+                        Fluttertoast.showToast(
+                          msg: '${snapshot.data![index].name} limited queues to: ${snapshot.data![index].queueLimit}',
+                          textColor: Colors.red,
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.BOTTOM,
                         );
@@ -122,6 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           children: [
                                             TextButton(
                                               onPressed: ()async{
+                                                Navigator.of(context).pop();
                                                 showDialog(
                                                   context: context,
                                                   builder: (BuildContext context) {
@@ -280,7 +289,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                             "purpose": purpose.text,
                                                                             "idNumber": idNumber.text
                                                                           };
-                                                                          var response = await api.postLogin(userInfoMap, "queue/");
+                                                                          var response = await api.postAddQueues(userInfoMap, "queue/");
                                                                           if(response != "Failed to add queue"){
                                                                             setState(() {
                                                                               userId.clear();
@@ -415,6 +424,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             // Add spacing between buttons
                                             TextButton(
                                               onPressed: () {
+                                                Navigator.of(context).pop();
                                                 showDialog(
                                                   context: context,
                                                   builder: (BuildContext context) {
@@ -535,7 +545,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                             "name": name.text,
                                                                             "purpose": purpose.text,
                                                                           };
-                                                                          var response = await api.postLogin(userInfoMap, "queue/");
+                                                                          var response = await api.postAddQueues(userInfoMap, "queue/");
                                                                           if(response != "Failed to add queue"){
                                                                             setState(() {
                                                                               userId.clear();

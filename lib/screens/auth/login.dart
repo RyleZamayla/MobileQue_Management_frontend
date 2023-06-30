@@ -42,7 +42,7 @@ class _LoginState extends State<Login> {
             Container(
               height: 200,
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/background_student.jpg'),
                   fit: BoxFit.cover,
@@ -67,7 +67,7 @@ class _LoginState extends State<Login> {
                     controller: _controllerEmail,
                     decoration: InputDecoration(
                       labelText: 'Email',
-                      labelStyle: TextStyle(color: Colors.black),
+                      labelStyle: const TextStyle(color: Colors.black),
                       hintText: 'Enter your email',
                       fillColor: Colors.white,
                       filled: true,
@@ -75,19 +75,19 @@ class _LoginState extends State<Login> {
                       const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50.0),
-                        borderSide: BorderSide(color: Colors.black, width: 2.0),
+                        borderSide: const BorderSide(color: Colors.black, width: 2.0),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50.0),
-                        borderSide: BorderSide(color: Colors.black, width: 2.0),
+                        borderSide: const BorderSide(color: Colors.black, width: 2.0),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50.0),
-                        borderSide: BorderSide(color: Colors.red, width: 4.0),
+                        borderSide: const BorderSide(color: Colors.red, width: 4.0),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50.0),
-                        borderSide: BorderSide(color: Colors.red, width: 4.0),
+                        borderSide: const BorderSide(color: Colors.red, width: 4.0),
                       ),
                     ),
                     validator: (val) {
@@ -106,7 +106,7 @@ class _LoginState extends State<Login> {
                     controller: _controllerPassword,
                     decoration: InputDecoration(
                       labelText: 'Password',
-                      labelStyle: TextStyle(color: Colors.black),
+                      labelStyle: const TextStyle(color: Colors.black),
                       hintText: 'Enter your password',
                       fillColor: Colors.white,
                       filled: true,
@@ -114,19 +114,19 @@ class _LoginState extends State<Login> {
                       const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50.0),
-                        borderSide: BorderSide(color: Colors.black, width: 2.0),
+                        borderSide: const BorderSide(color: Colors.black, width: 2.0),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50.0),
-                        borderSide: BorderSide(color: Colors.black, width: 2.0),
+                        borderSide: const BorderSide(color: Colors.black, width: 2.0),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50.0),
-                        borderSide: BorderSide(color: Colors.red, width: 4.0),
+                        borderSide: const BorderSide(color: Colors.red, width: 4.0),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50.0),
-                        borderSide: BorderSide(color: Colors.red, width: 4.0),
+                        borderSide: const BorderSide(color: Colors.red, width: 4.0),
                       ),
 
                       suffixIcon: IconButton(
@@ -158,17 +158,11 @@ class _LoginState extends State<Login> {
                         if (response != 'Failed to login') {
                           prefs.setString('userId', '${response['user']['_id']}');
                           prefs.setString('token', '${response['accessToken']}');
-                          prefs.setString('name', '${response['user']['name']}');
-                          prefs.setString('email', '${response['user']['email']}');
-                          prefs.setString('status', '${response['user']['status']}');
-                          prefs.setString('position', '${response['user']['position']}');
-                          prefs.setString('queueLimit', response['user']['queueLimit'].toString());
-                          prefs.setString('profilePic', '${response['user']['profilePic']}');
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext ctx) =>
-                                  adminDashboard(futureAdmin: response),
+                                  const adminDashboard(),
                             ),
                           );
                         } else {
@@ -196,9 +190,9 @@ class _LoginState extends State<Login> {
                           const Size(150.0,
                               48.0)),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Login',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,

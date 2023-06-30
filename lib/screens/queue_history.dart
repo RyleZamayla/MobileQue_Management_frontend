@@ -39,18 +39,18 @@ class _queueHistoryState extends State<queueHistory> {
             children: [
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "Student Number:",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${snapshot.data![index].idNumber}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -61,18 +61,18 @@ class _queueHistoryState extends State<queueHistory> {
               const SizedBox(height: 16.0),
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "Student Number:",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${snapshot.data![index].email}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -83,18 +83,18 @@ class _queueHistoryState extends State<queueHistory> {
               const SizedBox(height: 16.0),
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "Purpose:",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${snapshot.data![index].purpose}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -164,18 +164,18 @@ class _queueHistoryState extends State<queueHistory> {
             children: [
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "Guest Name:",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${snapshot.data![index].name}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -186,18 +186,18 @@ class _queueHistoryState extends State<queueHistory> {
               const SizedBox(height: 16.0),
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "Guest Email:",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${snapshot.data![index].email}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -208,18 +208,18 @@ class _queueHistoryState extends State<queueHistory> {
               const SizedBox(height: 16.0),
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "Purpose:",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${snapshot.data![index].purpose}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -230,18 +230,18 @@ class _queueHistoryState extends State<queueHistory> {
               const SizedBox(height: 16.0),
               Row(
                 children: [
-                  Text(
+                  const Text(
                     "status:",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${snapshot.data![index].status}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),

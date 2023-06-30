@@ -2,7 +2,7 @@
     package="com.example.mobilequemanagement_frontend">
     <uses-permission android:name="android.permission.CAMERA"/>
    <application
-        android:label="mobilequemanagement_frontend"
+        android:label="USTP Faculty Queueing"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
